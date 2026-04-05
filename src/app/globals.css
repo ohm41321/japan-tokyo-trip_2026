@@ -48,3 +48,104 @@ body {
   background: #9ca3af;
   border-radius: 4px;
 }
+
+/* Tab transition animations */
+.tab-content {
+  animation-fill-mode: both;
+}
+
+.tab-enter {
+  animation: tabSlideIn 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.tab-exit {
+  animation: tabSlideOut 0.25s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes tabSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes tabSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+    filter: blur(2px);
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+}
+
+/* Button press animation */
+.btn-press {
+  transition: transform 0.1s ease;
+}
+
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+/* Stagger children animation for grids */
+.stagger-enter .stagger-item {
+  opacity: 0;
+  animation: staggerFadeIn 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.stagger-enter .stagger-item:nth-child(1) { animation-delay: 0.03s; }
+.stagger-enter .stagger-item:nth-child(2) { animation-delay: 0.06s; }
+.stagger-enter .stagger-item:nth-child(3) { animation-delay: 0.09s; }
+.stagger-enter .stagger-item:nth-child(4) { animation-delay: 0.12s; }
+.stagger-enter .stagger-item:nth-child(5) { animation-delay: 0.15s; }
+.stagger-enter .stagger-item:nth-child(6) { animation-delay: 0.18s; }
+.stagger-enter .stagger-item:nth-child(7) { animation-delay: 0.21s; }
+
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Pulse animation for "Today" badge */
+@keyframes todayPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(236, 72, 153, 0); }
+}
+
+.today-pulse {
+  animation: todayPulse 2.5s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}

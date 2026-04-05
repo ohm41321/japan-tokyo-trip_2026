@@ -7,6 +7,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 interface DayCardProps extends DayPlan {
   dayIndex: number;
+  isToday?: boolean;
 }
 
 const gradients = [
@@ -19,7 +20,7 @@ const gradients = [
   "from-red-500 to-pink-500",
 ];
 
-export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, transport, locations, notes }: DayCardProps) {
+export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, transport, locations, notes, isToday }: DayCardProps) {
   const { toggleItem, toggleDay, getDayProgress, checkedItems, mounted } = useChecklist();
   const { language } = useLanguage();
   const [showMap, setShowMap] = useState<number | null>(null);
@@ -43,8 +44,38 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
     setCollapsedItems({});
   };
 
+  const getPriorityBadge = (priority?: number) => {
+    if (!priority) return null;
+    const badges: Record<number, { emoji: string; label: string; color: string }> = {
+      5: { emoji: "🔥", label: language === 'th' ? 'ต้องไป!' : 'Must Go', color: "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border-red-300 dark:border-red-700" },
+      4: { emoji: "⭐", label: language === 'th' ? 'แนะนำ' : 'Highly Rec', color: "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 border-orange-300 dark:border-orange-700" },
+      3: { emoji: "✨", label: language === 'th' ? 'น่าสนใจ' : 'Nice', color: "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border-blue-300 dark:border-blue-700" },
+      2: { emoji: "👍", label: language === 'th' ? 'ตามสะดวก' : 'Optional', color: "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-600" },
+      1: { emoji: "⏪", label: language === 'th' ? 'มีเวลาค่อยไป' : 'Skip if short', color: "bg-gray-50 dark:bg-gray-800 text-gray-400 dark:text-gray-500 border-gray-200 dark:border-gray-700" },
+    };
+    const badge = badges[priority];
+    if (!badge) return null;
+    return (
+      <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-xs font-medium border ${badge.color}`}>
+        <span>{badge.emoji}</span>
+        <span className="hidden sm:inline">{badge.label}</span>
+      </span>
+    );
+  };
+
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 ${allDone ? "ring-2 ring-green-500" : ""}`}>
+    <div className={`bg-white dark:bg-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 ${
+      isToday
+        ? "ring-4 ring-pink-500 dark:ring-pink-400 shadow-xl shadow-pink-500/20 dark:shadow-pink-400/20 scale-[1.02]"
+        : allDone
+          ? "ring-2 ring-green-500 shadow-lg"
+          : "shadow-lg"
+    }`}>
+      {isToday && (
+        <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-center py-1.5 text-xs sm:text-sm font-bold tracking-wide today-pulse">
+          📍 {language === 'th' ? 'วันนี้' : 'TODAY'}
+        </div>
+      )}
       {/* Clickable Header */}
       <button
         onClick={() => setIsCardExpanded(!isCardExpanded)}
@@ -99,7 +130,11 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
       </button>
 
       {/* Expandable Content */}
-      {isCardExpanded && (
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-out ${
+          isCardExpanded ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
         <div className="animate-fadeIn">
           {/* Transport Info */}
           {transport && (
@@ -126,14 +161,14 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
             <div className="px-4 sm:px-6 pt-3 flex gap-2">
               <button
                 onClick={expandAll}
-                className="text-xs sm:text-sm text-pink-600 dark:text-pink-400 hover:text-pink-800 dark:hover:text-pink-300 font-medium"
+                className="text-xs sm:text-sm text-pink-600 dark:text-pink-400 hover:text-pink-800 dark:hover:text-pink-300 font-medium transition-colors duration-150"
               >
                 {language === 'th' ? 'ขยายทั้งหมด' : 'Expand All'}
               </button>
               <span className="text-gray-400">|</span>
               <button
                 onClick={collapseAll}
-                className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300 font-medium"
+                className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300 font-medium transition-colors duration-150"
               >
                 {language === 'th' ? 'ยุบทั้งหมด' : 'Collapse All'}
               </button>
@@ -154,7 +189,7 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
                     <div className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3">
                       <button
                         onClick={() => toggleItem(dayIndex, itemIndex)}
-                        className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                        className={`mt-0.5 flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all duration-200 active:scale-90 ${
                           isChecked
                             ? "bg-green-500 border-green-500 text-white"
                             : "border-gray-400 dark:border-gray-500 hover:border-pink-500"
@@ -172,9 +207,12 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
                           className="flex items-center justify-between cursor-pointer select-none"
                           onClick={() => needsCollapse && toggleCollapse(itemIndex)}
                         >
-                          <span className={`text-sm ${isChecked ? "line-through text-gray-500 dark:text-gray-500" : "text-gray-900 dark:text-gray-100"}`}>
-                            {location.name}
-                          </span>
+                          <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <span className={`text-sm flex-1 truncate ${isChecked ? "line-through text-gray-500 dark:text-gray-500" : "text-gray-900 dark:text-gray-100"}`}>
+                              {location.name}
+                            </span>
+                            {getPriorityBadge(location.priority)}
+                          </div>
                           {needsCollapse && (
                             <svg
                               className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ml-2 ${isCollapsed ? "" : "rotate-180"}`}
@@ -267,7 +305,7 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
             )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

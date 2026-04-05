@@ -244,10 +244,10 @@ export default function TransportGuide() {
             <button
               key={i}
               onClick={() => setSelectedDay(i)}
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 active:scale-95 ${
                 selectedDay === i
                   ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-md'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 hover:scale-105'
               }`}
             >
               <span className="block">Day {i + 1}</span>
@@ -367,7 +367,7 @@ export default function TransportGuide() {
                           : `${language === 'th' ? 'แสดง' : 'Show'} ${language === 'th' ? 'เคล็ดลับ' : 'tips'} (${transport.tips.length})`}
                       </button>
                       {isExpanded && (
-                        <ul className="mt-2 space-y-1.5">
+                        <div className="mt-2 space-y-1.5 animate-fadeIn">
                           {(language === 'th' && transport.tipsTH ? transport.tipsTH : transport.tips).map((tip, idx) => (
                             <li
                               key={idx}
@@ -379,7 +379,7 @@ export default function TransportGuide() {
                               {tip}
                             </li>
                           ))}
-                        </ul>
+                        </div>
                       )}
                     </div>
                   )}

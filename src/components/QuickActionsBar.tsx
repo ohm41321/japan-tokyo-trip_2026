@@ -14,18 +14,20 @@ interface QuickAction {
 const mobileActions: QuickAction[] = [
   { id: 'itinerary', icon: '📅', labelEN: 'Plan', labelTH: 'แผน', color: 'from-pink-500 to-rose-500' },
   { id: 'budget', icon: '💰', labelEN: 'Budget', labelTH: 'งบ', color: 'from-purple-500 to-indigo-500' },
-  { id: 'weather', icon: '🌤️', labelEN: 'Weather', labelTH: 'อากาศ', color: 'from-blue-500 to-cyan-500' },
+  { id: 'yen', icon: '🎌', labelEN: 'Yen', labelTH: 'แปลงเงิน', color: 'from-amber-500 to-yellow-500' },
   { id: 'emergency', icon: '🚨', labelEN: 'Help', labelTH: 'ฉุกเฉิน', color: 'from-red-500 to-orange-500' },
 ];
 
 const desktopActions: QuickAction[] = [
   { id: 'itinerary', icon: '📅', labelEN: 'Plan', labelTH: 'แผน', color: 'from-pink-500 to-rose-500' },
   { id: 'budget', icon: '💰', labelEN: 'Budget', labelTH: 'งบ', color: 'from-purple-500 to-indigo-500' },
-  { id: 'weather', icon: '🌤️', labelEN: 'Weather', labelTH: 'อากาศ', color: 'from-blue-500 to-cyan-500' },
-  { id: 'journal', icon: '📝', labelEN: 'Notes', labelTH: 'บันทึก', color: 'from-amber-500 to-orange-500' },
-  { id: 'packing', icon: '🎒', labelEN: 'Pack', labelTH: 'จัดของ', color: 'from-green-500 to-teal-500' },
-  { id: 'transport', icon: '🚃', labelEN: 'Transit', labelTH: 'เดินทาง', color: 'from-cyan-500 to-blue-500' },
-  { id: 'emergency', icon: '🚨', labelEN: 'Help', labelTH: 'ฉุกเฉิน', color: 'from-red-500 to-orange-500' },
+  { id: 'weather', icon: '🌤️', labelEN: 'Weather', labelTH: 'อากาศ', color: 'from-cyan-500 to-teal-500' },
+  { id: 'yen', icon: '🎌', labelEN: 'Yen', labelTH: 'แปลงเงิน', color: 'from-amber-500 to-yellow-500' },
+  { id: 'phrase', icon: '🗣️', labelEN: 'Phrase', labelTH: 'ภาษา', color: 'from-rose-500 to-pink-500' },
+  { id: 'nearby', icon: '📍', labelEN: 'Nearby', labelTH: 'แถวนี้', color: 'from-teal-500 to-blue-500' },
+  { id: 'journal', icon: '📝', labelEN: 'Notes', labelTH: 'บันทึก', color: 'from-orange-500 to-amber-500' },
+  { id: 'packing', icon: '🎒', labelEN: 'Pack', labelTH: 'จัดของ', color: 'from-green-500 to-emerald-500' },
+  { id: 'transport', icon: '🚃', labelEN: 'Transit', labelTH: 'เดินทาง', color: 'from-indigo-500 to-blue-500' },
 ];
 
 interface QuickActionsBarProps {
@@ -46,10 +48,10 @@ export default function QuickActionsBar({ activeTab, onTabChange }: QuickActions
               <button
                 key={action.id}
                 onClick={() => onTabChange(action.id)}
-                className={`flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                className={`flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 active:scale-95 ${
                   activeTab === action.id
-                    ? `bg-gradient-to-r ${action.color} text-white shadow-lg scale-105`
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? `bg-gradient-to-r ${action.color} text-white shadow-lg`
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 hover:scale-105'
                 }`}
               >
                 <span className="mr-2">{action.icon}</span>
@@ -69,13 +71,13 @@ export default function QuickActionsBar({ activeTab, onTabChange }: QuickActions
               <button
                 key={action.id}
                 onClick={() => onTabChange(action.id)}
-                className={`snap-start flex-shrink-0 flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all min-w-[64px] ${
+                className={`snap-start flex-shrink-0 flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200 active:scale-95 min-w-[64px] ${
                   isActive
-                    ? `bg-gradient-to-br ${action.color} text-white shadow-md scale-105`
+                    ? `bg-gradient-to-br ${action.color} text-white shadow-md`
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
-                <span className={`text-xl mb-0.5 ${isActive ? 'scale-110' : ''}`}>
+                <span className={`text-xl mb-0.5 transition-transform ${isActive ? 'scale-110' : ''}`}>
                   {action.icon}
                 </span>
                 <span className="text-xs font-medium leading-tight whitespace-nowrap">
