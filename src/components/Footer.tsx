@@ -1,20 +1,28 @@
 "use client";
 
-import { useLanguage } from "@/context/LanguageContext";
-
 export default function Footer() {
-  const { language } = useLanguage();
-  
   return (
-    <footer className="bg-gray-900 dark:bg-black text-white text-center py-6 sm:py-10">
-      <p className="text-xl sm:text-2xl mb-2">
-        {language === 'th' ? '🌸 ขอให้สนุกกับการผจญภัยในโตเกียว! 🌸' : '🌸 Enjoy Your Tokyo Adventure! 🌸'}
+    <footer className="bg-zinc-900 dark:bg-black text-zinc-400 text-center py-6 sm:py-10 text-xs sm:text-sm">
+      <p>
+        Made by{' '}
+        <a
+          href="https://github.com/ohm41321"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-zinc-200 underline underline-offset-2 transition-colors"
+        >
+          ohm41321
+        </a>
       </p>
-      <p className="text-xs sm:text-sm text-gray-400">
-        {language === 'th' 
-          ? 'สร้างด้วย ❤️ • 7 วัน • 49 สถานที่ • 200+ เคล็ดลับ' 
-          : 'Built with ❤️ • 7 Days • 49 Locations • 200+ Tips'
-        }
+      <p className="mt-1">
+        <a
+          href="https://tipme.in.th/athitfkm"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-zinc-200 underline underline-offset-2 transition-colors"
+        >
+          Donate ☕
+        </a>
       </p>
     </footer>
   );
