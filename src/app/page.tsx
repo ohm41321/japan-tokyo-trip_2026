@@ -9,7 +9,6 @@ import WeatherWidget from '@/components/WeatherWidget';
 import PackingList from '@/components/PackingList';
 import TransportGuide from '@/components/TransportGuide';
 import EmergencyInfo from '@/components/EmergencyInfo';
-import TimelineView from '@/components/TimelineView';
 import TravelJournal from '@/components/TravelJournal';
 import QuickActionsBar from '@/components/QuickActionsBar';
 import { itineraryData } from '@/data/itinerary';
@@ -43,12 +42,6 @@ export default function Home() {
         {activeTab === 'weather' && (
           <div className="max-w-2xl mx-auto">
             <WeatherWidget />
-          </div>
-        )}
-
-        {activeTab === 'timeline' && (
-          <div className="max-w-3xl mx-auto">
-            <TimelineView />
           </div>
         )}
 

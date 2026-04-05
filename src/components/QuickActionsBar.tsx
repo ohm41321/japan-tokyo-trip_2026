@@ -22,7 +22,6 @@ const desktopActions: QuickAction[] = [
   { id: 'itinerary', icon: '📅', labelEN: 'Plan', labelTH: 'แผน', color: 'from-pink-500 to-rose-500' },
   { id: 'budget', icon: '💰', labelEN: 'Budget', labelTH: 'งบ', color: 'from-purple-500 to-indigo-500' },
   { id: 'weather', icon: '🌤️', labelEN: 'Weather', labelTH: 'อากาศ', color: 'from-blue-500 to-cyan-500' },
-  { id: 'timeline', icon: '⏰', labelEN: 'Time', labelTH: 'เวลา', color: 'from-indigo-500 to-blue-500' },
   { id: 'journal', icon: '📝', labelEN: 'Notes', labelTH: 'บันทึก', color: 'from-amber-500 to-orange-500' },
   { id: 'packing', icon: '🎒', labelEN: 'Pack', labelTH: 'จัดของ', color: 'from-green-500 to-teal-500' },
   { id: 'transport', icon: '🚃', labelEN: 'Transit', labelTH: 'เดินทาง', color: 'from-cyan-500 to-blue-500' },
