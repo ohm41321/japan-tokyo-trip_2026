@@ -14,6 +14,7 @@ import BudgetCombined from '@/components/BudgetCombined';
 import YenConverter from '@/components/YenConverter';
 import NearbyStore from '@/components/NearbyStore';
 import HotelCard from '@/components/HotelCard';
+import ShoppingList from '@/components/Recommendations';
 import SOSButton from '@/components/SOSButton';
 import TabContent from '@/components/TabContent';
 import QuickActionsBar from '@/components/QuickActionsBar';
@@ -58,6 +59,12 @@ export default function Home() {
         <TabContent isVisible={activeTab === 'budget'}>
           <div className="max-w-2xl mx-auto">
             <BudgetCombined />
+          </div>
+        </TabContent>
+
+        <TabContent isVisible={activeTab === 'recommend'}>
+          <div className="max-w-2xl mx-auto">
+            <ShoppingList />
           </div>
         </TabContent>
 

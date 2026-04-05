@@ -14,13 +14,14 @@ interface QuickAction {
 const mobileActions: QuickAction[] = [
   { id: 'itinerary', icon: '📅', labelEN: 'Plan', labelTH: 'แผน', color: 'from-zinc-700 to-zinc-900' },
   { id: 'budget', icon: '💰', labelEN: 'Budget', labelTH: 'งบ', color: 'from-zinc-700 to-zinc-900' },
-  { id: 'hotel', icon: '🏨', labelEN: 'Hotel', labelTH: 'โรงแรม', color: 'from-zinc-700 to-zinc-900' },
+  { id: 'recommend', icon: '⭐', labelEN: 'Rec', labelTH: 'แนะนำ', color: 'from-zinc-700 to-zinc-900' },
   { id: 'emergency', icon: '🚨', labelEN: 'Help', labelTH: 'ฉุกเฉิน', color: 'from-zinc-700 to-zinc-900' },
 ];
 
 const desktopActions: QuickAction[] = [
   { id: 'itinerary', icon: '📅', labelEN: 'Plan', labelTH: 'แผน', color: 'from-zinc-700 to-zinc-900' },
   { id: 'budget', icon: '💰', labelEN: 'Budget', labelTH: 'งบ', color: 'from-zinc-700 to-zinc-900' },
+  { id: 'recommend', icon: '⭐', labelEN: 'Rec', labelTH: 'แนะนำ', color: 'from-zinc-700 to-zinc-900' },
   { id: 'hotel', icon: '🏨', labelEN: 'Hotel', labelTH: 'โรงแรม', color: 'from-zinc-700 to-zinc-900' },
   { id: 'weather', icon: '🌤️', labelEN: 'Weather', labelTH: 'อากาศ', color: 'from-zinc-700 to-zinc-900' },
   { id: 'yen', icon: '🎌', labelEN: 'Yen', labelTH: 'แปลงเงิน', color: 'from-zinc-700 to-zinc-900' },
