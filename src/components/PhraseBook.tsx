@@ -91,6 +91,14 @@ export default function PhraseBook() {
   const [selectedCategory, setSelectedCategory] = useState(phraseData[0].id);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  // Translate mode
+  const [mode, setMode] = useState<"phrases" | "translate">("phrases");
+  const [inputText, setInputText] = useState("");
+  const [translatedText, setTranslatedText] = useState("");
+  const [translating, setTranslating] = useState(false);
+  const [translateError, setTranslateError] = useState<string | null>(null);
+  const [transDirection, setTransDirection] = useState<"th2jp" | "jp2th">("th2jp");
+
   // Trigger voice loading on mount
   useEffect(() => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -139,6 +147,31 @@ export default function PhraseBook() {
     });
   };
 
+  const handleTranslate = async () => {
+    if (!inputText.trim()) return;
+    setTranslating(true);
+    setTranslateError(null);
+    setTranslatedText("");
+
+    try {
+      const langPair = transDirection === "th2jp" ? "th|ja" : "ja|th";
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(inputText)}&langpair=${langPair}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
+      const data = await res.json();
+      if (data.responseStatus === 200 && data.responseData?.translatedText) {
+        setTranslatedText(data.responseData.translatedText);
+      } else {
+        throw new Error("Translation failed");
+      }
+    } catch (err) {
+      console.error("Translate failed:", err);
+      setTranslateError(language === 'th' ? 'แปลไม่สําเร็จ ลองอีกครั้ง' : 'Translation failed. Try again.');
+    } finally {
+      setTranslating(false);
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden max-w-2xl mx-auto">
       {/* Header */}
@@ -158,6 +191,164 @@ export default function PhraseBook() {
         </div>
       </div>
 
+      {/* Mode Toggle */}
+      <div className="px-3 sm:px-4 pt-3">
+        <div className="flex gap-1 bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+          <button
+            onClick={() => setMode("phrases")}
+            className={`flex-1 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all active:scale-95 ${
+              mode === "phrases"
+                ? 'bg-white dark:bg-gray-800 text-pink-600 dark:text-pink-400 shadow-sm'
+                : 'text-gray-500 dark:text-gray-400'
+            }`}
+          >
+            🗣️ {language === 'th' ? 'ประโยคสําเร็จ' : 'Phrases'}
+          </button>
+          <button
+            onClick={() => setMode("translate")}
+            className={`flex-1 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all active:scale-95 ${
+              mode === "translate"
+                ? 'bg-white dark:bg-gray-800 text-pink-600 dark:text-pink-400 shadow-sm'
+                : 'text-gray-500 dark:text-gray-400'
+            }`}
+          >
+            🔄 {language === 'th' ? 'แปลภาษา' : 'Translate'}
+          </button>
+        </div>
+      </div>
+
+      {/* ─── TRANSLATE MODE ─── */}
+      {mode === "translate" && (
+        <div className="p-3 sm:p-4 space-y-3">
+          {/* Direction Toggle */}
+          <div className="flex items-center justify-center gap-2">
+            <button
+              onClick={() => setTransDirection("th2jp")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95 ${
+                transDirection === "th2jp"
+                  ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+              }`}
+            >
+              🇹🇭 TH {'\u2192'} JP 🇯🇵
+            </button>
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+            <button
+              onClick={() => setTransDirection("jp2th")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95 ${
+                transDirection === "jp2th"
+                  ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+              }`}
+            >
+              🇯🇵 JP {'\u2192'} TH 🇹🇭
+            </button>
+          </div>
+
+          {/* Input */}
+          <div>
+            <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
+              {transDirection === "th2jp"
+                ? (language === 'th' ? 'พิมพ์ภาษาไทย' : 'Type in Thai')
+                : (language === 'th' ? 'พิมพ์ภาษาญี่ปุ่น' : 'Type in Japanese')}
+            </label>
+            <textarea
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyDown={(e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleTranslate(); }}
+              placeholder={transDirection === "th2jp"
+                ? (language === 'th' ? 'เช่น สถานีรถไฟอยู่ที่ไหน' : 'e.g., Where is the train station?')
+                : (language === 'th' ? 'เช่น 駅はどこですか' : 'e.g., Eki wa doko desu ka?')
+              }
+              rows={3}
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-pink-400 outline-none text-sm resize-none"
+            />
+            <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">
+              {language === 'th' ? 'Ctrl+Enter เพื่อแปล' : 'Ctrl+Enter to translate'}
+            </p>
+          </div>
+
+          {/* Translate Button */}
+          <button
+            onClick={handleTranslate}
+            disabled={!inputText.trim() || translating}
+            className={`w-full py-3 rounded-xl text-sm font-bold transition-all active:scale-95 ${
+              inputText.trim() && !translating
+                ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-lg'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
+            }`}
+          >
+            {translating
+              ? (language === 'th' ? 'กำลังแปล...' : 'Translating...')
+              : (language === 'th' ? '🔄 แปลเลย' : '🔄 Translate')
+            }
+          </button>
+
+          {/* Error */}
+          {translateError && (
+            <p className="text-xs text-red-500 dark:text-red-400 text-center">{translateError}</p>
+          )}
+
+          {/* Result */}
+          {translatedText && (
+            <div className="bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-xl border border-pink-200 dark:border-pink-800 p-4">
+              <p className="text-xs font-semibold text-pink-600 dark:text-pink-400 mb-2">
+                {transDirection === "th2jp"
+                  ? (language === 'th' ? '🇯🇵 ภาษาญี่ปุ่น:' : 'Japanese:')
+                  : (language === 'th' ? '🇹🇭 ภาษาไทย:' : 'Thai:')
+                }
+              </p>
+              <p className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">
+                {translatedText}
+              </p>
+              <div className="flex gap-2">
+                {transDirection === "th2jp" ? (
+                  <>
+                    <button
+                      onClick={() => speakJapanese(translatedText)}
+                      className="flex-1 py-2 rounded-lg text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors active:scale-95"
+                    >
+                      🔊 {language === 'th' ? 'ฟังเสียง' : 'Listen'}
+                    </button>
+                    <button
+                      onClick={() => copyToClipboard(translatedText, 'trans-jp')}
+                      className="flex-1 py-2 rounded-lg text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors active:scale-95"
+                    >
+                      {copiedId === 'trans-jp' ? '✅ ' : '📋 '}
+                      {copiedId === 'trans-jp'
+                        ? (language === 'th' ? 'คัดลอกแล้ว!' : 'Copied!')
+                        : (language === 'th' ? 'คัดลอก' : 'Copy')
+                      }
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => copyToClipboard(translatedText, 'trans-th')}
+                    className="w-full py-2 rounded-lg text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors active:scale-95"
+                  >
+                    {copiedId === 'trans-th' ? '✅ ' : '📋 '}
+                    {copiedId === 'trans-th'
+                      ? (language === 'th' ? 'คัดลอกแล้ว!' : 'Copied!')
+                      : (language === 'th' ? 'คัดลอก' : 'Copy')
+                    }
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* API note */}
+          <p className="text-[10px] text-gray-400 dark:text-gray-500 text-center">
+            {language === 'th' ? 'แปลโดย MyMemory API (ฟรี) — ผลลัพธ์อาจไม่สมบูรณ์ 100%' : 'Powered by MyMemory API (free) — results may not be 100% accurate'}
+          </p>
+        </div>
+      )}
+
+      {/* ─── PHRASE BOOK MODE ─── */}
+      {mode === "phrases" && (
+      <>
       {/* Category Tabs */}
       <div className="px-3 pt-3">
         <div className="flex gap-1.5 overflow-x-auto pb-2 scrollbar-hide" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -225,6 +416,8 @@ export default function PhraseBook() {
           </div>
         ))}
       </div>
+      </>
+      )}
 
       {/* Footer Tip */}
       <div className="px-4 pb-4">

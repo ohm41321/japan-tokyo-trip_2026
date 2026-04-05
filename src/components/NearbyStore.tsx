@@ -127,12 +127,18 @@ export default function NearbyStore() {
             >
               <span className="text-2xl block mb-1">{store.emoji}</span>
               <span className="text-xs font-semibold block">
-                {language === 'th' ? store.nameJP : store.name}
+                {store.name}
               </span>
               <span className={`text-[10px] block mt-0.5 ${
                 selectedType === store.id ? 'text-white/80' : 'text-gray-400 dark:text-gray-500'
               }`}>
                 {language === 'th' ? store.descriptionTH : store.description}
+              </span>
+              {/* Japanese name sub-label */}
+              <span className={`text-[10px] block mt-0.5 ${
+                selectedType === store.id ? 'text-white/60' : 'text-gray-300 dark:text-gray-600'
+              }`}>
+                {store.nameJP}
               </span>
             </button>
           ))}
