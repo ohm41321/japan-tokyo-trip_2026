@@ -11,13 +11,13 @@ interface DayCardProps extends DayPlan {
 }
 
 const gradients = [
-  "from-pink-500 to-rose-500",
-  "from-purple-500 to-indigo-500",
-  "from-blue-500 to-cyan-500",
-  "from-green-500 to-emerald-500",
-  "from-orange-500 to-amber-500",
-  "from-teal-500 to-cyan-500",
-  "from-red-500 to-pink-500",
+  "from-pink-400 to-rose-400",
+  "from-purple-400 to-indigo-400",
+  "from-blue-400 to-cyan-400",
+  "from-green-400 to-emerald-400",
+  "from-orange-400 to-amber-400",
+  "from-teal-400 to-cyan-400",
+  "from-red-400 to-pink-400",
 ];
 
 export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, transport, locations, notes, isToday }: DayCardProps) {
@@ -66,13 +66,13 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
   return (
     <div className={`bg-white dark:bg-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 ${
       isToday
-        ? "ring-4 ring-pink-500 dark:ring-pink-400 shadow-xl shadow-pink-500/20 dark:shadow-pink-400/20 scale-[1.02]"
+        ? "ring-4 ring-pink-400 dark:ring-pink-300 shadow-xl shadow-pink-400/15 dark:shadow-pink-300/15 scale-[1.02]"
         : allDone
           ? "ring-2 ring-green-500 shadow-lg"
           : "shadow-lg"
     }`}>
       {isToday && (
-        <div className="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-center py-1.5 text-xs sm:text-sm font-bold tracking-wide today-pulse">
+        <div className="bg-gradient-to-r from-pink-400 to-rose-400 text-white text-center py-1.5 text-xs sm:text-sm font-bold tracking-wide today-pulse">
           📍 {language === 'th' ? 'วันนี้' : 'TODAY'}
         </div>
       )}
@@ -147,7 +147,7 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
           <div className="px-4 sm:px-6 pt-4">
             <button
               onClick={() => toggleDay(dayIndex)}
-              className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all w-full"
+              className="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all w-full"
             >
               {allDone
                 ? (language === 'th' ? '☐ ยกเลิกทั้งหมด' : '☐ Uncheck All')

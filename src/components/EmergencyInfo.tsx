@@ -91,7 +91,7 @@ export default function EmergencyInfo() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden max-w-2xl mx-auto">
       {/* Header */}
-      <div className="bg-gradient-to-r from-red-600 to-orange-600 p-5 text-white">
+      <div className="bg-gradient-to-r from-red-400 to-orange-400 p-5 text-white">
         <div className="flex items-center gap-3">
           <span className="text-3xl">🚨</span>
           <div>

@@ -85,21 +85,21 @@ export default function BudgetCombined() {
       label: language === 'th' ? 'ใช้ทั้งหมด' : 'Total Spent',
       value: `${totalSpent.toLocaleString()}¥`,
       sub: totalBudget > 0 ? `${Math.round((totalSpent / totalBudget) * 100)}%` : '',
-      gradient: "from-violet-500 to-purple-600",
+      gradient: "from-violet-400 to-purple-500",
       emoji: "💰",
     },
     {
       label: language === 'th' ? 'งบรวม' : 'Total Budget',
       value: totalBudget > 0 ? `${totalBudget.toLocaleString()}¥` : (language === 'th' ? 'ยังไม่ได้ตั้ง' : 'Not set'),
       sub: allDaysOverBudget > 0 ? `${allDaysOverBudget} วันเกินงบ` : '',
-      gradient: totalBudget > 0 ? "from-blue-500 to-indigo-500" : "from-gray-400 to-gray-500",
+      gradient: totalBudget > 0 ? "from-blue-400 to-indigo-500" : "from-gray-400 to-gray-500",
       emoji: totalBudget > 0 ? "📊" : "🎯",
     },
     {
       label: language === 'th' ? 'วันนี้ใช้' : 'Today',
       value: `${todayTotal.toLocaleString()}¥`,
       sub: todayBudget > 0 ? (todayOver ? '⚠️ เกิน!' : `งบ ${todayBudget.toLocaleString()}¥`) : '',
-      gradient: todayOver ? "from-red-500 to-rose-500" : "from-emerald-500 to-teal-500",
+      gradient: todayOver ? "from-red-400 to-rose-500" : "from-emerald-400 to-teal-500",
       emoji: "📍",
     },
   ];
@@ -111,7 +111,7 @@ export default function BudgetCombined() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden max-w-2xl mx-auto">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-4 sm:p-5 text-white">
+      <div className="bg-gradient-to-r from-purple-400 to-indigo-400 p-4 sm:p-5 text-white">
         <h2 className="text-xl sm:text-2xl font-bold">
           {language === 'th' ? 'งบประมาณ' : 'Budget'}
         </h2>
@@ -199,7 +199,7 @@ export default function BudgetCombined() {
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`p-3 rounded-xl text-sm transition-all active:scale-95 ${
                     selectedCategory === cat.id
-                      ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md scale-105'
+                      ? 'bg-gradient-to-r from-purple-400 to-indigo-400 text-white shadow-md scale-105'
                       : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                   }`}
                 >
@@ -233,7 +233,7 @@ export default function BudgetCombined() {
             disabled={!amount || parseFloat(amount) <= 0}
             className={`w-full py-4 rounded-xl text-base font-bold transition-all active:scale-95 ${
               amount && parseFloat(amount) > 0
-                ? 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-lg hover:shadow-xl'
+                ? 'bg-gradient-to-r from-purple-400 to-indigo-400 text-white shadow-lg hover:shadow-xl'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
             }`}
           >
@@ -306,7 +306,7 @@ export default function BudgetCombined() {
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-xs ${
-                        isToday ? 'bg-gradient-to-br from-purple-500 to-indigo-500' : overBudget ? 'bg-red-500' : 'bg-purple-400'
+                        isToday ? 'bg-gradient-to-br from-purple-400 to-indigo-400' : overBudget ? 'bg-red-500' : 'bg-purple-400'
                       }`}>
                         {index + 1}
                       </div>

@@ -13,6 +13,7 @@ import PhraseBook from '@/components/PhraseBook';
 import BudgetCombined from '@/components/BudgetCombined';
 import YenConverter from '@/components/YenConverter';
 import NearbyStore from '@/components/NearbyStore';
+import HotelCard from '@/components/HotelCard';
 import SOSButton from '@/components/SOSButton';
 import TabContent from '@/components/TabContent';
 import QuickActionsBar from '@/components/QuickActionsBar';
@@ -38,7 +39,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 pb-20 lg:pb-8">
+    <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pb-20 lg:pb-8">
       <Header />
 
       {/* Quick Actions Bar (replaces old tab navigation) */}
@@ -57,6 +58,12 @@ export default function Home() {
         <TabContent isVisible={activeTab === 'budget'}>
           <div className="max-w-2xl mx-auto">
             <BudgetCombined />
+          </div>
+        </TabContent>
+
+        <TabContent isVisible={activeTab === 'hotel'}>
+          <div className="max-w-2xl mx-auto">
+            <HotelCard />
           </div>
         </TabContent>
 

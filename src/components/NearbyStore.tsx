@@ -96,7 +96,7 @@ export default function NearbyStore() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden max-w-2xl mx-auto">
       {/* Header */}
-      <div className="bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 p-4 sm:p-5 text-white">
+      <div className="bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 p-4 sm:p-5 text-white">
         <div className="flex items-center gap-3">
           <div className="bg-white/20 backdrop-blur-sm rounded-xl p-2.5">
             <span className="text-3xl">📍</span>

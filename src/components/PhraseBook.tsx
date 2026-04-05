@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { speakJapanese, isTTSSupported } from "@/utils/tts";
 
 interface Phrase {
   th: string;
@@ -99,46 +100,15 @@ export default function PhraseBook() {
   const [translateError, setTranslateError] = useState<string | null>(null);
   const [transDirection, setTransDirection] = useState<"th2jp" | "jp2th">("th2jp");
 
-  // Trigger voice loading on mount
+  // Pre-load voices on mount
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.getVoices();
+    if (isTTSSupported()) {
+      const { getVoices } = require("@/utils/tts");
+      getVoices();
     }
   }, []);
 
   const currentCategory = phraseData.find(c => c.id === selectedCategory) || phraseData[0];
-
-  const speakJapanese = (text: string) => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-
-    const synth = window.speechSynthesis;
-    synth.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ja-JP';
-    utterance.rate = 0.75;
-    utterance.pitch = 1;
-
-    const voices = synth.getVoices();
-    const jpVoice = voices.find(v => v.lang.startsWith('ja'));
-    if (jpVoice) utterance.voice = jpVoice;
-
-    if (voices.length === 0) {
-      const onVoicesLoaded = () => {
-        const loadedVoices = synth.getVoices();
-        const loadedJpVoice = loadedVoices.find(v => v.lang.startsWith('ja'));
-        if (loadedJpVoice) utterance.voice = loadedJpVoice;
-        synth.speak(utterance);
-      };
-      synth.addEventListener('voiceschanged', onVoicesLoaded, { once: true });
-      setTimeout(() => {
-        synth.removeEventListener('voiceschanged', onVoicesLoaded);
-        synth.speak(utterance);
-      }, 1000);
-    } else {
-      synth.speak(utterance);
-    }
-  };
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -175,7 +145,7 @@ export default function PhraseBook() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden max-w-2xl mx-auto">
       {/* Header */}
-      <div className="bg-gradient-to-r from-rose-500 via-pink-500 to-red-500 p-4 sm:p-5 text-white">
+      <div className="bg-gradient-to-r from-rose-400 via-pink-400 to-red-400 p-4 sm:p-5 text-white">
         <div className="flex items-center gap-3">
           <div className="bg-white/20 backdrop-blur-sm rounded-xl p-2.5">
             <span className="text-3xl">🗣️</span>
@@ -226,7 +196,7 @@ export default function PhraseBook() {
               onClick={() => setTransDirection("th2jp")}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95 ${
                 transDirection === "th2jp"
-                  ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow'
+                  ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-white shadow'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
               }`}
             >
@@ -239,7 +209,7 @@ export default function PhraseBook() {
               onClick={() => setTransDirection("jp2th")}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-95 ${
                 transDirection === "jp2th"
-                  ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow'
+                  ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-white shadow'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
               }`}
             >
@@ -276,7 +246,7 @@ export default function PhraseBook() {
             disabled={!inputText.trim() || translating}
             className={`w-full py-3 rounded-xl text-sm font-bold transition-all active:scale-95 ${
               inputText.trim() && !translating
-                ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-lg'
+                ? 'bg-gradient-to-r from-pink-400 to-rose-400 text-white shadow-lg'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
             }`}
           >
@@ -358,7 +328,7 @@ export default function PhraseBook() {
               onClick={() => setSelectedCategory(cat.id)}
               className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 active:scale-95 ${
                 selectedCategory === cat.id
-                  ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md'
+                  ? 'bg-gradient-to-r from-rose-400 to-pink-400 text-white shadow-md'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >

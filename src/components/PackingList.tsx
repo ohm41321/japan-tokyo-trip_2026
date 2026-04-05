@@ -5,12 +5,12 @@ import { usePackingList, PackingItem } from '@/hooks/usePackingList';
 import { useLanguage } from '@/context/LanguageContext';
 
 const categoryConfig = {
-  documents: { emoji: '📋', labelEN: 'Documents', labelTH: 'เอกสาร', color: 'blue', gradient: 'from-blue-500 to-indigo-500' },
-  electronics: { emoji: '🔌', labelEN: 'Electronics', labelTH: 'อิเล็กทรอนิกส์', color: 'purple', gradient: 'from-purple-500 to-indigo-500' },
-  clothing: { emoji: '👕', labelEN: 'Clothing', labelTH: 'เสื้อผ้า', color: 'pink', gradient: 'from-pink-500 to-rose-500' },
-  toiletries: { emoji: '🧴', labelEN: 'Toiletries', labelTH: 'ของใช้ส่วนตัว', color: 'yellow', gradient: 'from-yellow-500 to-orange-500' },
-  medicine: { emoji: '💊', labelEN: 'Medicine', labelTH: 'ยา', color: 'red', gradient: 'from-red-500 to-pink-500' },
-  miscellaneous: { emoji: '📦', labelEN: 'Misc', labelTH: 'เบ็ดเตล็ด', color: 'gray', gradient: 'from-gray-500 to-slate-500' },
+  documents: { emoji: '📋', labelEN: 'Documents', labelTH: 'เอกสาร', color: 'blue', gradient: 'from-blue-400 to-indigo-400' },
+  electronics: { emoji: '🔌', labelEN: 'Electronics', labelTH: 'อิเล็กทรอนิกส์', color: 'purple', gradient: 'from-purple-400 to-indigo-400' },
+  clothing: { emoji: '👕', labelEN: 'Clothing', labelTH: 'เสื้อผ้า', color: 'pink', gradient: 'from-pink-400 to-rose-400' },
+  toiletries: { emoji: '🧴', labelEN: 'Toiletries', labelTH: 'ของใช้ส่วนตัว', color: 'yellow', gradient: 'from-yellow-400 to-orange-400' },
+  medicine: { emoji: '💊', labelEN: 'Medicine', labelTH: 'ยา', color: 'red', gradient: 'from-red-400 to-pink-400' },
+  miscellaneous: { emoji: '📦', labelEN: 'Misc', labelTH: 'เบ็ดเตล็ด', color: 'gray', gradient: 'from-gray-400 to-slate-400' },
 };
 
 export default function PackingList() {
@@ -46,7 +46,7 @@ export default function PackingList() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
       {/* Header */}
-      <div className={`bg-gradient-to-r from-green-500 to-teal-500 p-4 sm:p-6 text-white`}>
+      <div className={`bg-gradient-to-r from-green-400 to-teal-400 p-4 sm:p-6 text-white`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-3xl">🎒</span>
@@ -176,7 +176,7 @@ export default function PackingList() {
             />
             <button
               onClick={handleAddItem}
-              className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-lg hover:from-green-600 hover:to-teal-600 transition-all shadow-md hover:shadow-lg"
+              className="px-4 py-2 text-sm font-medium bg-gradient-to-r from-green-400 to-teal-400 text-white rounded-lg hover:from-green-500 hover:to-teal-500 transition-all shadow-md hover:shadow-lg"
             >
               {language === 'th' ? 'เพิ่ม' : 'Add'}
             </button>

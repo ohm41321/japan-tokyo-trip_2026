@@ -48,7 +48,7 @@ export default function WeatherWidget() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
       {/* Header - Bigger & Clearer */}
-      <div className="bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-500 p-4 sm:p-5 text-white">
+      <div className="bg-gradient-to-r from-blue-400 via-sky-400 to-cyan-400 p-4 sm:p-5 text-white">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3 flex-1">
             <div className="bg-white/20 backdrop-blur-sm rounded-xl p-2.5">

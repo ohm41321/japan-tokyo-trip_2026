@@ -81,7 +81,7 @@ export default function TravelJournal() {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden max-w-3xl mx-auto">
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-500 to-orange-500 p-4 text-white">
+      <div className="bg-gradient-to-r from-amber-400 to-orange-400 p-4 text-white">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-2xl">📝</span>

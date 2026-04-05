@@ -86,12 +86,13 @@ export default function Header() {
 
   return (
     <header className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-pink-600 via-purple-600 to-indigo-700 dark:from-pink-900 dark:via-purple-900 dark:to-indigo-950"></div>
+      <div className="absolute inset-0 bg-black dark:bg-zinc-950"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-800/40 via-transparent to-transparent"></div>
       <div className="relative container mx-auto px-4 py-8 sm:py-12">
         <div className="flex items-center justify-between mb-4 sm:mb-6">
           <div className="flex-1">
             <h1 className="text-3xl sm:text-5xl font-bold text-white mb-1 sm:mb-2">🗼 Tokyo 2026</h1>
-            <p className="text-sm sm:text-xl text-white/80">📅 April 16-22 • 7 Days</p>
+            <p className="text-sm sm:text-xl text-zinc-400">📅 April 16-22 • 7 Days</p>
           </div>
           <div className="flex flex-col items-end gap-2">
             <DualClock />
@@ -103,10 +104,10 @@ export default function Header() {
             {/* Language Toggle */}
             <button
               onClick={() => setLanguage(language === 'en' ? 'th' : 'en')}
-              className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/20"
+              className="p-2 sm:p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-zinc-800"
               aria-label="Toggle language"
             >
-              <span className="text-sm sm:text-base font-bold text-white">
+              <span className="text-sm sm:text-base font-bold text-zinc-300">
                 {language === 'en' ? '🇹🇭 TH' : '🇬🇧 EN'}
               </span>
             </button>
@@ -114,7 +115,7 @@ export default function Header() {
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm"
+              className="p-2 sm:p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-zinc-800"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? (
@@ -127,33 +128,33 @@ export default function Header() {
         </div>
 
         <div className="flex gap-2 sm:gap-3 flex-wrap mb-4 sm:mb-6">
-          <span className="bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-white">
+          <span className="bg-white/5 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-zinc-400 border border-zinc-800">
             ✈️ TG 640
           </span>
-          <span className="bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-white">
+          <span className="bg-white/5 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-zinc-400 border border-zinc-800">
             🏨 Ueno
           </span>
-          <span className="bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-white">
+          <span className="bg-white/5 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-zinc-400 border border-zinc-800">
             🎫 JR Pass
           </span>
-          <span className="bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-white">
+          <span className="bg-white/5 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-zinc-400 border border-zinc-800">
             💳 Suica x4
           </span>
         </div>
 
         {mounted && (
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">
+          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-zinc-800">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-white text-xs sm:text-sm font-medium">
+              <span className="text-zinc-300 text-xs sm:text-sm font-medium">
                 {language === 'th' ? 'ความคืบหน้าทริป' : 'Trip Progress'}
               </span>
-              <span className="text-white text-xs sm:text-sm">
+              <span className="text-zinc-400 text-xs sm:text-sm">
                 {progress.done}/{progress.total} ({progress.percent}%)
               </span>
             </div>
-            <div className="w-full bg-white/20 rounded-full h-2.5 sm:h-3">
+            <div className="w-full bg-zinc-800 rounded-full h-2.5 sm:h-3">
               <div
-                className="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 sm:h-3 rounded-full transition-all duration-500"
+                className="bg-gradient-to-r from-zinc-200 to-white h-2.5 sm:h-3 rounded-full transition-all duration-500"
                 style={{ width: `${progress.percent}%` }}
               ></div>
             </div>

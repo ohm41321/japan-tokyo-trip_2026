@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { speakJapanese, isTTSSupported } from "@/utils/tts";
 
 interface SOSPhrase {
   th: string;
@@ -74,61 +75,21 @@ const emergencyContacts: EmergencyContact[] = [
   },
 ];
 
-// --- Speech helper that works across browsers ---
-function speakJapanese(text: string) {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-
-  const synth = window.speechSynthesis;
-  synth.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'ja-JP';
-  utterance.rate = 0.75;
-  utterance.pitch = 1;
-
-  // Try to find a Japanese voice
-  const voices = synth.getVoices();
-  const jpVoice = voices.find(v => v.lang.startsWith('ja'));
-  if (jpVoice) {
-    utterance.voice = jpVoice;
-  }
-
-  // On some browsers (Chrome), voices load asynchronously.
-  // If no voices are available yet, wait for them.
-  if (voices.length === 0) {
-    const onVoicesLoaded = () => {
-      const loadedVoices = synth.getVoices();
-      const loadedJpVoice = loadedVoices.find(v => v.lang.startsWith('ja'));
-      if (loadedJpVoice) {
-        utterance.voice = loadedJpVoice;
-      }
-      synth.speak(utterance);
-    };
-    synth.addEventListener('voiceschanged', onVoicesLoaded, { once: true });
-    // Fallback: if voiceschanged never fires, just try speaking anyway
-    setTimeout(() => {
-      synth.removeEventListener('voiceschanged', onVoicesLoaded);
-      synth.speak(utterance);
-    }, 1000);
-  } else {
-    synth.speak(utterance);
-  }
-}
-
 export default function SOSButton() {
   const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
 
-  const copyText = useCallback((text: string) => {
-    navigator.clipboard.writeText(text);
-  }, []);
-
-  // Trigger voice loading on mount so voices are ready
+  // Pre-load voices on mount
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.getVoices();
+    if (isTTSSupported()) {
+      const { getVoices } = require("@/utils/tts");
+      getVoices();
     }
   }, []);
+
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
 
   return (
     <>
@@ -152,7 +113,7 @@ export default function SOSButton() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* SOS Header */}
-            <div className="bg-gradient-to-r from-red-600 to-orange-600 p-4 text-white flex-shrink-0">
+            <div className="bg-gradient-to-r from-red-400 to-orange-400 p-4 text-white flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="text-3xl">🆘</span>
