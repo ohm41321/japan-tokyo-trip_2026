@@ -1,10 +1,12 @@
 "use client";
 
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage, Language } from "@/context/LanguageContext";
 import { useChecklist } from "@/hooks/useChecklist";
 
 export default function Header() {
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage } = useLanguage();
   const { getTotalProgress, mounted } = useChecklist();
   const progress = getTotalProgress();
 
@@ -17,17 +19,31 @@ export default function Header() {
             <h1 className="text-3xl sm:text-5xl font-bold text-white mb-1 sm:mb-2">🗼 Tokyo 2026</h1>
             <p className="text-sm sm:text-xl text-white/80">📅 April 16-22 • 7 Days</p>
           </div>
-          <button
-            onClick={toggleTheme}
-            className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm flex-shrink-0 ml-2"
-            aria-label="Toggle theme"
-          >
-            {theme === "dark" ? (
-              <span className="text-xl sm:text-2xl">☀️</span>
-            ) : (
-              <span className="text-xl sm:text-2xl">🌙</span>
-            )}
-          </button>
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-2">
+            {/* Language Toggle */}
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'th' : 'en')}
+              className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/20"
+              aria-label="Toggle language"
+            >
+              <span className="text-sm sm:text-base font-bold text-white">
+                {language === 'en' ? '🇹🇭 TH' : '🇬🇧 EN'}
+              </span>
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-sm"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <span className="text-xl sm:text-2xl">☀️</span>
+              ) : (
+                <span className="text-xl sm:text-2xl">🌙</span>
+              )}
+            </button>
+          </div>
         </div>
 
         <div className="flex gap-2 sm:gap-3 flex-wrap mb-4 sm:mb-6">
@@ -48,7 +64,9 @@ export default function Header() {
         {mounted && (
           <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-white text-xs sm:text-sm font-medium">Progress</span>
+              <span className="text-white text-xs sm:text-sm font-medium">
+                {language === 'th' ? 'ความคืบหน้าทริป' : 'Trip Progress'}
+              </span>
               <span className="text-white text-xs sm:text-sm">
                 {progress.done}/{progress.total} ({progress.percent}%)
               </span>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { DayPlan } from "@/data/itinerary";
 import { useChecklist } from "@/hooks/useChecklist";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface DayCardProps extends DayPlan {
   dayIndex: number;
@@ -20,6 +21,7 @@ const gradients = [
 
 export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, transport, locations, notes }: DayCardProps) {
   const { toggleItem, toggleDay, getDayProgress, checkedItems, mounted } = useChecklist();
+  const { language } = useLanguage();
   const [showMap, setShowMap] = useState<number | null>(null);
   const [collapsedItems, setCollapsedItems] = useState<Record<number, boolean>>({});
   const [isCardExpanded, setIsCardExpanded] = useState(false);
@@ -79,7 +81,12 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
         {mounted && (
           <div className="mt-3">
             <div className="flex items-center justify-between text-xs sm:text-sm mb-1">
-              <span>{progress.done}/{progress.total} done</span>
+              <span>
+                {progress.done}/{progress.total} {language === 'th' ? 'เสร็จแล้ว' : 'done'}
+              </span>
+              <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs">
+                {progress.percent}%
+              </span>
             </div>
             <div className="w-full bg-white/20 rounded-full h-2">
               <div
@@ -107,7 +114,10 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
               onClick={() => toggleDay(dayIndex)}
               className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all w-full"
             >
-              {allDone ? "☐ Uncheck All" : "☑ Check All"}
+              {allDone
+                ? (language === 'th' ? '☐ ยกเลิกทั้งหมด' : '☐ Uncheck All')
+                : (language === 'th' ? '☑ เลือกทั้งหมด' : '☑ Check All')
+              }
             </button>
           </div>
 
@@ -118,14 +128,14 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
                 onClick={expandAll}
                 className="text-xs sm:text-sm text-pink-600 dark:text-pink-400 hover:text-pink-800 dark:hover:text-pink-300 font-medium"
               >
-                Expand All
+                {language === 'th' ? 'ขยายทั้งหมด' : 'Expand All'}
               </button>
               <span className="text-gray-400">|</span>
               <button
                 onClick={collapseAll}
                 className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300 font-medium"
               >
-                Collapse All
+                {language === 'th' ? 'ยุบทั้งหมด' : 'Collapse All'}
               </button>
             </div>
           )}
@@ -158,7 +168,7 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
                       </button>
 
                       <div className="flex-1 min-w-0">
-                        <div 
+                        <div
                           className="flex items-center justify-between cursor-pointer select-none"
                           onClick={() => needsCollapse && toggleCollapse(itemIndex)}
                         >
@@ -166,10 +176,10 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
                             {location.name}
                           </span>
                           {needsCollapse && (
-                            <svg 
-                              className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ml-2 ${isCollapsed ? "" : "rotate-180"}`} 
-                              fill="none" 
-                              stroke="currentColor" 
+                            <svg
+                              className={`w-4 h-4 text-gray-400 transition-transform flex-shrink-0 ml-2 ${isCollapsed ? "" : "rotate-180"}`}
+                              fill="none"
+                              stroke="currentColor"
                               viewBox="0 0 24 24"
                             >
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -179,7 +189,29 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
 
                         {/* Expandable Content */}
                         {(!needsCollapse || !isCollapsed) && (
-                          <div className="mt-2">
+                          <div className="mt-2 space-y-2">
+                            {/* Tips Section */}
+                            {location.tips && location.tips.length > 0 && (
+                              <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-l-4 border-amber-400 dark:border-amber-600 rounded-r-lg p-3">
+                                <div className="flex items-start gap-2 mb-2">
+                                  <svg className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                  </svg>
+                                  <span className="text-xs font-semibold text-amber-900 dark:text-amber-300 uppercase tracking-wide">
+                                    {language === 'th' ? '💡 เคล็ดลับและข้อควรระวัง' : '💡 Tips & Advice'}
+                                  </span>
+                                </div>
+                                <ul className="space-y-1.5">
+                                  {location.tips.map((tip, tipIndex) => (
+                                    <li key={tipIndex} className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 leading-relaxed flex items-start gap-2">
+                                      <span className="text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0">•</span>
+                                      <span>{tip}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
                             {/* Google Maps Button */}
                             <button
                               onClick={(e) => {
@@ -191,7 +223,10 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
                               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                               </svg>
-                              {showMap === itemIndex ? "Hide Map" : "View on Map"}
+                              {showMap === itemIndex
+                                ? (language === 'th' ? 'ซ่อนแผนที่' : 'Hide Map')
+                                : (language === 'th' ? 'ดูบนแผนที่' : 'View on Map')
+                              }
                             </button>
 
                             {showMap === itemIndex && (
@@ -211,7 +246,7 @@ export default function DayCard({ day, dayIndex, date, dayOfWeek, title, icon, t
                                     rel="noopener noreferrer"
                                     className="text-xs text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap ml-2"
                                   >
-                                    Open in Maps ↗
+                                    {language === 'th' ? 'เปิดใน Maps ↗' : 'Open in Maps ↗'}
                                   </a>
                                 </div>
                               </div>
