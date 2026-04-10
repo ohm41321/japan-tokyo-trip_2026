@@ -18,6 +18,7 @@ import ShoppingList from '@/components/Recommendations';
 import SOSButton from '@/components/SOSButton';
 import TabContent from '@/components/TabContent';
 import QuickActionsBar from '@/components/QuickActionsBar';
+import FeatureUpdateModal from '@/components/FeatureUpdateModal';
 import { itineraryData } from '@/data/itinerary';
 
 // Trip start date: April 16, 2026
@@ -127,6 +128,9 @@ export default function Home() {
 
       {/* SOS Floating Button */}
       <SOSButton />
+
+      {/* Feature Update Modal */}
+      <FeatureUpdateModal />
     </main>
   );
 }

@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "WebSearch",
+      "WebFetch(rapidapi.com)",
+      "WebFetch(api-sdk.navitime.co.jp)"
     ]
   },
   "$version": 3

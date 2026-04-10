@@ -3,6 +3,8 @@
 import { useState, useMemo } from 'react';
 import { useTransport } from '../hooks/useTransport';
 import { useLanguage } from '@/context/LanguageContext';
+import TrainRouteFinder from './TrainRouteFinder';
+import InteractiveTrainMap from './InteractiveTrainMap';
 
 const typeIcons: Record<string, string> = {
   train: '\u{1F683}',
@@ -108,6 +110,7 @@ export default function TransportGuide() {
 
   const [selectedDay, setSelectedDay] = useState(0);
   const [expandedTips, setExpandedTips] = useState<Record<string, boolean>>({});
+  const [activeTab, setActiveTab] = useState<'guide' | 'finder' | 'map'>('guide');
 
   const dayTransports = useMemo(() => getDayTransports(selectedDay), [getDayTransports, selectedDay]);
   const jrValues = useMemo(() => calculateJRPassValue(), [calculateJRPassValue]);
@@ -148,6 +151,57 @@ export default function TransportGuide() {
             : 'Plan your routes, maximize your JR Pass, and navigate Tokyo like a pro.'}
         </p>
       </div>
+
+      {/* Tab Navigation */}
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-2 mb-4 sm:mb-6">
+        <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+          <button
+            onClick={() => setActiveTab('guide')}
+            className={`flex-1 px-4 py-3 rounded-xl font-medium text-sm transition-all min-h-[44px] ${
+              activeTab === 'guide'
+                ? 'bg-gradient-to-r from-indigo-500 to-blue-500 text-white shadow-md'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+            }`}
+          >
+            <span className="block text-xs">{'\u{1F4CB}'}</span>
+            <span className="block text-xs mt-0.5">
+              {language === 'th' ? 'ไกด์ขนส่ง' : 'Transport Guide'}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab('finder')}
+            className={`flex-1 px-4 py-3 rounded-xl font-medium text-sm transition-all min-h-[44px] ${
+              activeTab === 'finder'
+                ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-md'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+            }`}
+          >
+            <span className="block text-xs">{'\u{1F50D}'}</span>
+            <span className="block text-xs mt-0.5">
+              {language === 'th' ? 'ค้นหาเส้นทาง' : 'Route Finder'}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab('map')}
+            className={`flex-1 px-4 py-3 rounded-xl font-medium text-sm transition-all min-h-[44px] ${
+              activeTab === 'map'
+                ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-md'
+                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+            }`}
+          >
+            <span className="block text-xs">{'\u{1F5FA}\uFE0F'}</span>
+            <span className="block text-xs mt-0.5">
+              {language === 'th' ? 'แผนที่รถไฟ' : 'Train Map'}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === 'finder' && <TrainRouteFinder />}
+      {activeTab === 'map' && <InteractiveTrainMap />}
+      {activeTab === 'guide' && (
+      <div className="space-y-4 sm:space-y-6 animate-fadeIn">
 
       {/* JR Pass Summary */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 p-3 sm:p-6 mb-4 sm:mb-6">
@@ -500,6 +554,8 @@ export default function TransportGuide() {
           </div>
         </div>
       </div>
+      </div>
+      )}
     </div>
   );
 }
