@@ -9,7 +9,7 @@ export default function FeatureUpdateModal() {
 
   useEffect(() => {
     // ตรวจสอบว่าเคยเห็น notification นี้หรือยัง
-    const hasSeenUpdate = localStorage.getItem('seen_feature_update_2024');
+    const hasSeenUpdate = localStorage.getItem('seen_feature_update_v3');
     
     if (!hasSeenUpdate) {
       // แสดงหลังจากโหลดหน้า 1 วินาที
@@ -24,7 +24,7 @@ export default function FeatureUpdateModal() {
   const handleClose = () => {
     setIsOpen(false);
     // บันทึกว่าผู้ใช้เห็นแล้ว
-    localStorage.setItem('seen_feature_update_2024', 'true');
+    localStorage.setItem('seen_feature_update_v3', 'true');
   };
 
   if (!isOpen) return null;
@@ -57,24 +57,41 @@ export default function FeatureUpdateModal() {
 
         {/* Content */}
         <div className="p-6 space-y-4">
-          {/* Feature 1: Route Finder */}
+          {/* Feature 1: Weather by Location - NEW */}
+          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
+            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-xl">
+              🆕
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+                {language === 'th' ? 'สภาพอากาศตามสถานที่ในทริป (ใหม่!)' : 'Weather by Trip Location (New!)'}
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                {language === 'th'
+                  ? 'เลือกดูสภาพอากาศ 7 วันของสถานที่ที่มีในทริป: โตเกียว, นาริตะ, กาล่ายูซาวะ, คามะคุระ, คาวาโกเอะ, ฟูจิ พร้อม Highlight วันนี้ว่าควรดูที่ไหน'
+                  : 'View 7-day weather for trip locations: Tokyo, Narita, Gala Yuzawa, Kamakura, Kawagoe, Fuji. Plus today\'s recommendation!'}
+              </p>
+            </div>
+          </div>
+
+          {/* Feature 2: Place-based Route Finder */}
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-xl">
               🗺️
             </div>
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                {language === 'th' ? 'ค้นหาเส้นทางด้วย Google Maps' : 'Route Finder with Google Maps'}
+                {language === 'th' ? 'ค้นหาด้วยชื่อสถานที่ + Autocomplete' : 'Search by Place Name + Autocomplete'}
               </h3>
               <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                 {language === 'th'
-                  ? 'เลือกสถานีต้นทาง-ปลายทาง แล้วเปิด Google Maps เพื่อดูเส้นทางเรียลไทม์ พร้อมเวลาออก-ถึง'
-                  : 'Select stations and open Google Maps for real-time routes with departure/arrival times'}
+                  ? 'พิมพ์ชื่อสถานที่อะไรก็ได้ มีคำแนะนำจาก OpenStreetMap (ฟรี!) พร้อมแท็บสถานที่ท่องเที่ยวยอดนิยมและโรงแรม'
+                  : 'Type any place for autocomplete suggestions from OpenStreetMap (Free!) Plus tourist places and hotels tabs'}
               </p>
             </div>
           </div>
 
-          {/* Feature 2: JR Map */}
+          {/* Feature 3: JR Map */}
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-xl">
               🚃
@@ -91,9 +108,9 @@ export default function FeatureUpdateModal() {
             </div>
           </div>
 
-          {/* Feature 3: Thai + English Names */}
+          {/* Feature 4: Thai + English Names */}
           <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-xl">
+            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-xl">
               🌐
             </div>
             <div className="flex-1">

@@ -16,9 +16,13 @@ export interface DayWeather {
   tips: string[];
 }
 
-// Tokyo coordinates
-const TOKYO_LAT = 35.6762;
-const TOKYO_LON = 139.6503;
+export interface WeatherLocation {
+  id: string;
+  name: string;
+  nameTH: string;
+  lat: number;
+  lng: number;
+}
 
 // Location names for each day
 const dayLocations = [
@@ -120,7 +124,7 @@ function getTips(weather: DayWeather): string[] {
   return tips;
 }
 
-export function useWeather() {
+export function useWeather(location?: WeatherLocation) {
   const [weatherData, setWeatherData] = useState<DayWeather[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -134,6 +138,11 @@ export function useWeather() {
         setLoading(true);
         setError(null);
 
+        // ใช้ lat/lng จาก location ที่ส่งมา หรือใช้ Tokyo เป็นค่าเริ่มต้น
+        const lat = location?.lat ?? 35.6762;
+        const lng = location?.lng ?? 139.6503;
+        const locationName = location?.name ?? 'Tokyo';
+
         // Get today's date and 6 days ahead
         const today = new Date();
         const endDate = new Date(today);
@@ -146,7 +155,7 @@ export function useWeather() {
         // Fetch from Open-Meteo API (FREE, NO API KEY!)
         const url =
           `https://api.open-meteo.com/v1/forecast?` +
-          `latitude=${TOKYO_LAT}&longitude=${TOKYO_LON}` +
+          `latitude=${lat}&longitude=${lng}` +
           `&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max,windspeed_10m_max,relative_humidity_2m_max` +
           `&start_date=${startStr}&end_date=${endStr}` +
           `&timezone=Asia%2FTokyo`;
@@ -170,7 +179,7 @@ export function useWeather() {
           const weather: DayWeather = {
             dayIndex: i,
             date: dateStr,
-            location: dayLocations[i],
+            location: locationName,
             condition: wmoToCondition(daily.weathercode[i] ?? 3),
             highTemp: Math.round(daily.temperature_2m_max[i] ?? 18),
             lowTemp: Math.round(daily.temperature_2m_min[i] ?? 10),
@@ -197,8 +206,9 @@ export function useWeather() {
           console.error('Weather fetch failed:', err);
           setError(err instanceof Error ? err.message : 'Failed to fetch weather');
           setLoading(false);
-          // Use fallback data
-          setWeatherData(getFallbackWeather());
+          // ใช้ชื่อสถานที่จาก location ที่ส่งมา
+          const fallbackLocationName = location?.name ?? 'Tokyo';
+          setWeatherData(getFallbackWeather(fallbackLocationName));
         }
       }
     }
@@ -208,7 +218,7 @@ export function useWeather() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [location]);
 
   const getDayWeather = (dayIndex: number) => {
     return weatherData.find((d) => d.dayIndex === dayIndex);
@@ -236,15 +246,15 @@ export function useWeather() {
 }
 
 // Fallback data if API fails
-function getFallbackWeather(): DayWeather[] {
+function getFallbackWeather(locationName: string = 'Tokyo'): DayWeather[] {
   const baseWeather: Omit<DayWeather, 'clothing' | 'tips'>[] = [
-    { dayIndex: 0, date: 'Today', location: dayLocations[0], condition: 'partly-cloudy', highTemp: 20, lowTemp: 12, humidity: 55, rainChance: 30, windSpeed: 12 },
-    { dayIndex: 1, date: 'Tomorrow', location: dayLocations[1], condition: 'cloudy', highTemp: 16, lowTemp: 10, humidity: 70, rainChance: 60, windSpeed: 15 },
-    { dayIndex: 2, date: 'Day 3', location: dayLocations[2], condition: 'partly-cloudy', highTemp: 19, lowTemp: 12, humidity: 60, rainChance: 40, windSpeed: 10 },
-    { dayIndex: 3, date: 'Day 4', location: dayLocations[3], condition: 'sunny', highTemp: 21, lowTemp: 13, humidity: 45, rainChance: 10, windSpeed: 8 },
-    { dayIndex: 4, date: 'Day 5', location: dayLocations[4], condition: 'cloudy', highTemp: 17, lowTemp: 11, humidity: 75, rainChance: 70, windSpeed: 18 },
-    { dayIndex: 5, date: 'Day 6', location: dayLocations[5], condition: 'partly-cloudy', highTemp: 20, lowTemp: 12, humidity: 58, rainChance: 35, windSpeed: 11 },
-    { dayIndex: 6, date: 'Day 7', location: dayLocations[6], condition: 'sunny', highTemp: 22, lowTemp: 13, humidity: 50, rainChance: 15, windSpeed: 9 },
+    { dayIndex: 0, date: 'Today', location: locationName, condition: 'partly-cloudy', highTemp: 20, lowTemp: 12, humidity: 55, rainChance: 30, windSpeed: 12 },
+    { dayIndex: 1, date: 'Tomorrow', location: locationName, condition: 'cloudy', highTemp: 16, lowTemp: 10, humidity: 70, rainChance: 60, windSpeed: 15 },
+    { dayIndex: 2, date: 'Day 3', location: locationName, condition: 'partly-cloudy', highTemp: 19, lowTemp: 12, humidity: 60, rainChance: 40, windSpeed: 10 },
+    { dayIndex: 3, date: 'Day 4', location: locationName, condition: 'sunny', highTemp: 21, lowTemp: 13, humidity: 45, rainChance: 10, windSpeed: 8 },
+    { dayIndex: 4, date: 'Day 5', location: locationName, condition: 'cloudy', highTemp: 17, lowTemp: 11, humidity: 75, rainChance: 70, windSpeed: 18 },
+    { dayIndex: 5, date: 'Day 6', location: locationName, condition: 'partly-cloudy', highTemp: 20, lowTemp: 12, humidity: 58, rainChance: 35, windSpeed: 11 },
+    { dayIndex: 6, date: 'Day 7', location: locationName, condition: 'sunny', highTemp: 22, lowTemp: 13, humidity: 50, rainChance: 15, windSpeed: 9 },
   ];
 
   return baseWeather.map((w) => {
