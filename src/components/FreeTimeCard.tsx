@@ -81,6 +81,100 @@ const freeTimeData: AreaGroup[] = [
         ],
       },
       {
+        category: "แฟชั่น",
+        icon: "👕",
+        locations: [
+          {
+            name: "HUMAN MADE OFFLINE STORE TOKYO",
+            query: "HUMAN MADE OFFLINE STORE TOKYO",
+            walkingTime: "🚶 10 min จาก Shibuya Station / 3 min จาก Omotesando",
+            closingTime: "19:00",
+            tips: [
+              "👕 ร้าน Standalone Flagship Store ของ HUMAN MADE สาขาหลักในโตเกียว",
+              "🌟 มีสินค้าครบที่สุด ทั้งเสื้อผ้า ของใช้ และ Merchandise",
+              "🛍️ คิวอาจจะยาวในวันหยุดหรือวันปล่อยสินค้าใหม่ (Drop day ทุกเช้าวันหยุด)",
+              "⏰ เปิด 11:00-19:00 (อาจมีการเปลี่ยนแปลง)",
+              "💳 รับบัตรเครดิต มี Tax Free",
+            ],
+          },
+          {
+            name: "HUMAN MADE SHIBUYA PARCO",
+            query: "HUMAN MADE SHIBUYA PARCO",
+            walkingTime: "🚶 5 min จาก Shibuya Station",
+            closingTime: "21:00",
+            tips: [
+              "🏬 ตั้งอยู่ในห้าง Shibuya PARCO ชั้น 1 เดินทางง่ายที่สุด",
+              "👕 เน้นเสื้อผ้า คอลเลกชันใหม่ๆ เข้าถึงง่าย",
+              "📸 หน้าร้านเก๋ มีจอและพร็อพตกแต่งตามสไตล์ของร้าน",
+              "⏰ เปิด 11:00-21:00 ตามเวลาเปิด-ปิดของห้าง",
+              "💳 รับบัตรเครดิต มี Tax Free ทำที่เคาน์เตอร์ของห้างได้เลย",
+            ],
+          },
+          {
+            name: "MIYASHITA PARK",
+            query: "MIYASHITA PARK Shibuya Tokyo",
+            walkingTime: "🚶 3 min จาก Shibuya Station",
+            closingTime: "21:00",
+            tips: [
+              "👕 ห้างกึ่งสวนสาธารณะลอยฟ้า ดีไซน์สวยชิค",
+              "☕ มีร้านกาแฟ คาเฟ่ชื่อดัง และร้านแบรนด์เนมอย่าง KITH Tokyo",
+              "🛍️ มีร้าน GBL Store ขายของสะสมจากสตูดิโอ Ghibli",
+              "📸 บรรยากาศโปร่งสบาย เหมาะกับมาพักผ่อน ถ่ายรูปเล่น",
+              "⏰ เปิด 11:00-21:00 (ร้านอาหารอาจเปิดดึกกว่า)",
+            ]
+          },
+          {
+            name: "GU Shibuya",
+            query: "GU Shibuya Tokyo",
+            walkingTime: "🚶 4 min จาก Shibuya Station",
+            closingTime: "21:00",
+            tips: [
+              "👕 สาขาใหญ่ใจกลางชิบูย่า ตัวเลือกแฟชั่นผู้ชาย/ผู้หญิงจัดเต็ม",
+              "💸 ช้อปปิ้งเสื้อผ้าสไตล์สตรีทและเบสิกในราคาสบายกระเป๋า (ถูกกว่าไทยด้วยค่าเงิน)",
+              "💳 มีเคาน์เตอร์ Tax Free บริการจ่ายเงินอัตโนมัติสะดวกสบาย",
+              "⏰ เปิด 11:00-21:00 (เสาร์อาทิตย์เปิด 10:00)",
+            ]
+          },
+        ],
+      },
+      {
+        category: "แผ่นเสียง/CD",
+        icon: "💿",
+        locations: [
+          {
+            name: "Tower Records Shibuya",
+            query: "Tower Records Shibuya Tokyo",
+            walkingTime: "🚶 3 min จาก Shibuya Station",
+            closingTime: "22:00",
+            tips: [
+              "💿 ตึก 9 ชั้นที่เป็นตำนานของคนรักเสียงเพลง",
+              "🎵 มีตั้งแต่ Vinyl แผ่นหายาก, CD, DVD และโซน K-Pop/J-Pop",
+              "🤩 มีชั้นจัดนิทรรศการและอีเวนต์แจกของเกี่ยวกับศิลปินบ่อยครั้ง",
+              "⏰ เปิด 11:00-22:00",
+            ]
+          }
+        ]
+      },
+      {
+        category: "อนิเมะ/โอตาคุ",
+        icon: "🎌",
+        locations: [
+          {
+            name: "Nintendo TOKYO / Pokémon Center",
+            query: "Nintendo TOKYO Shibuya PARCO",
+            walkingTime: "🚶 5 min จาก Shibuya Station",
+            closingTime: "21:00",
+            tips: [
+              "🎮 สวรรค์ของวัยรุ่นและเกมเมอร์ ตั้งอยู่ที่ Shibuya PARCO ชั้น 6",
+              "🍄 Nintendo TOKYO เปิดให้บริการครั้งแรกในญี่ปุ่น",
+              "⚡ Pokémon Center สุดล้ำ มีมิวทูอยู่ในหลอดทดลองหน้าร้าน",
+              "🛍️ ซื้อของสะสมและสินค้า Limited ที่หาจากที่อื่นไม่ได้",
+              "⚠️ วันหยุดอาจต้องรอคิวเข้าร้าน",
+            ]
+          }
+        ]
+      },
+      {
         category: "100 เยน/ดองกี้",
         icon: "🏪",
         locations: [
@@ -141,6 +235,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Record Tower Main Shop",
             query: "Record Tower Main Shop Tokyo",
+            walkingTime: "🚶 5 min จาก Shinjuku Station",
+            closingTime: "21:00",
             tips: [
               "💿 ร้านแผ่นเสียงและสื่อเพลงที่ใหญ่ที่สุดในญี่ปุ่น มีทั้ง Vinyl, CD, DVD",
               "🎵 มีทั้งเพลงญี่ปุ่น, Jazz, Rock, Pop, Classical, Anime Soundtrack",
@@ -153,6 +249,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Disk Union Shinjuku",
             query: "Disk Union Shinjuku Tokyo",
+            walkingTime: "🚶 3 min จาก Shinjuku Station",
+            closingTime: "21:00",
             tips: [
               "💿 สาขา Shinjuku มี Jazz, Rock, City Pop, Classical เยอะสุดในโตเกียว",
               "🎷 Jazz Section ดังกึ่งดัง มีแผ่นหายากจากยุค 60s-80s",
@@ -170,6 +268,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "@cosme TOKYO (Shinjuku)",
             query: "@cosme TOKYO Shinjuku",
+            closingTime: "21:00",
+            walkingTime: "🚶 3 min จาก Shinjuku Station",
             tips: [
               "💄 ร้านเครื่องสำอางยักษ์ใหญ่ รวมแบรนด์ยอดนิยมไว้ที่เดียว",
               "🌟 มี Shiseido, SUQQU, Addiction, RMK, Canmake, CeZanne",
@@ -182,6 +282,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Bic Camera Shinjuku (เครื่องสำอางชั้นล่าง)",
             query: "Bic Camera Shinjuku Tokyo",
+            closingTime: "22:00",
+            walkingTime: "🚶 1 min จาก Shinjuku Station",
             tips: [
               "📷 ตึกใหญ่ 9 ชั้น มีทุกอย่าง - กล้อง, เครื่องใช้ไฟฟ้า, นาฬิกา, เครื่องสำอาง",
               "💄 ชั้นเครื่องสำอางมี Shiseido, SK-II, Kanebo, Decorté ราคาถูก",
@@ -193,12 +295,64 @@ const freeTimeData: AreaGroup[] = [
         ],
       },
       {
+        category: "เครื่องเขียน/ศิลปะ",
+        icon: "✏️",
+        locations: [
+          {
+            name: "Sekaido Shinjuku",
+            query: "Sekaido Shinjuku Tokyo",
+            walkingTime: "🚶 5 min จาก Shinjuku Station",
+            closingTime: "20:30",
+            tips: [
+              "✏️ สวรรค์ของคนรักเครื่องเขียนและอุปกรณ์ศิลปะ สินค้าราคาถูกกว่าทั่วไป",
+              "🎨 มีครบทุกอย่าง ตั้งแต่ปากกา สี กระดาษ งานฝีมือ และของขวัญกระจุกกระจิก",
+            ]
+          }
+        ]
+      },
+      {
+        category: "รองเท้ากีฬา",
+        icon: "👟",
+        locations: [
+          {
+            name: "Alpen TOKYO",
+            query: "Alpen TOKYO Shinjuku",
+            walkingTime: "🚶 3 min จาก Shinjuku Station",
+            closingTime: "22:00",
+            tips: [
+              "👟 ตึกศูนย์รวมอุปกรณ์กีฬาและแคมป์ปิ้ง มหึมาที่สุดใจกลางชินจูกุ",
+              "🏃‍♂️ มีรองเท้าวิ่ง, รองเท้าผ้าใบหายาก, ชุดกีฬา และโซนสายนอกบ้านครบวงจร",
+            ]
+          }
+        ]
+      },
+      {
+        category: "แฟชั่น",
+        icon: "👕",
+        locations: [
+          {
+            name: "GU Shinjuku Flags",
+            query: "GU Shinjuku Flags Tokyo",
+            walkingTime: "🚶 1 min จาก Shinjuku Station (East/South Exit)",
+            closingTime: "21:00",
+            tips: [
+              "👕 กู สาขาใจกลางชินจูกุ เดินทางง่ายมาก เดินออกมาเจอเลย",
+              "👖 สินค้าเปลี่ยนไว แฟชั่นตามฤดูกาลมาครบ",
+              "💸 ช้อปปิ้งต่อได้เลยเพราะอยู่ในตึก Flags ที่มีแหล่งร้านป๊อปคัลเจอร์เพียบ",
+              "⏰ เปิด 11:00-21:00",
+            ]
+          }
+        ]
+      },
+      {
         category: "100 เยน/ดองกี้",
         icon: "🏪",
         locations: [
           {
             name: "Don Quijote Shinjuku (ดองกี้)",
             query: "Don Quijote Shinjuku Tokyo",
+            closingTime: "24:00",
+            walkingTime: "🚶 2 min จาก Shinjuku Station",
             tips: [
               "🏪 ร้านดองกี้สาขา Shinjuku ใหญ่ เปิดดึก มีของเยอะมาก",
               "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
@@ -210,6 +364,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Can Do Shinjuku",
             query: "Can Do Shinjuku Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 4 min จาก Shinjuku Station",
             tips: [
               "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
               "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
@@ -221,6 +377,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Daiso Shinjuku",
             query: "Daiso Shinjuku Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 3 min จาก Shinjuku Station",
             tips: [
               "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
               "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
@@ -245,6 +403,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Yamashiroya (山城屋)",
             query: "Yamashiroya Ueno Tokyo",
+            walkingTime: "🚶 1 min จาก Ueno Station",
+            closingTime: "20:00",
             tips: [
               "🧸 ร้านของเล่นและ Hobby ขนาดใหญ่ 6 ชั้น อยู่หน้าสถานี Ueno",
               "🚗 มี Tamiya Model Kits, Gunpla, รถบังคับ, โมเดลทหาร, ไดคาสต์ ครบ!",
@@ -263,6 +423,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Disk Union Ueno",
             query: "Disk Union Ueno Tokyo",
+            walkingTime: "🚶 3 min จาก Ueno Station",
+            closingTime: "20:00",
             tips: [
               "💿 ร้านแผ่นเสียงและ CD มือสองชื่อดัง มีหลายสาขาใน Ueno",
               "🎵 แบ่งตามแนวเพลง - Jazz, Rock, Pop, Classical, Electronic, Anime Song",
@@ -270,6 +432,18 @@ const freeTimeData: AreaGroup[] = [
               "🔍 ตรวจสอบสภาพแผ่นก่อนซื้อ มีเกรด A/B/C บอกไว้",
               "📸 บางร้านมีแผ่นปกหายากหรือ Limited Edition เฉพาะญี่ปุ่น",
               "⏰ เปิด 11:00-20:00 (แต่ละสาขาอาจต่างกัน)",
+            ],
+          },
+          {
+            name: "Chikkōdō (Chikukodo)",
+            query: "Chikukodo Ameyoko Ueno Tokyo",
+            walkingTime: "🚶 3 min จาก Ueno Station (ใน Ameyoko)",
+            closingTime: "21:00",
+            tips: [
+              "💿 ร้านแผ่นเสียงระดับตำนานที่เปิดมานานกว่า 70 ปี",
+              "🌟 เน้นแผ่นเสียงยุค Showa, City Pop, และ J-Pop เก่าๆ",
+              "📸 บรรยากาศอบอุ่นคลาสสิกสุดๆ มีแผ่นหายากซ่อนอยู่เยอะมาก",
+              "⏰ เปิด 13:00-21:00",
             ],
           },
         ],
@@ -281,6 +455,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Takeya Ueno (ชั้นเครื่องสำอาง)",
             query: "Takeya Ueno Tokyo",
+            closingTime: "20:00",
+            walkingTime: "🚶 2 min จาก Ueno Station",
             tips: [
               "🏪 ร้าน Duty Free ขนาดใหญ่ มีของฝาก ขนม เครื่องสำอาง ยา ครบ",
               "💄 ชั้นเครื่องสำอางมี Shiseido, SK-II, Biore, Hada Labo ราคาถูกกว่าไทย",
@@ -293,6 +469,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Ainz & Tulpe Ueno",
             query: "Ainz Tulpe Ueno Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 3 min จาก Ueno Station",
             tips: [
               "💄 ร้านเครื่องสำอางและยาขนาดใหญ่ มีแบรนด์ญี่ปุ่นครบ",
               "🌟 มี Shiseido, Decorté, Kanebo, SK-II, Hada Labo, Biore, Senka",
@@ -305,6 +483,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Matsukiyo / Sundrug (ร้านยา)",
             query: "Matsukiyo Sundrug Ueno Tokyo",
+            closingTime: "22:00",
+            walkingTime: "🚶 2 min จาก Ueno Station",
             tips: [
               "💊 ร้านขายยายอดนิยม มีสาขาเยอะใน Ueno",
               "💄 มีเครื่องสำอาง, สกินแคร์, กันแดด ราคาถูก",
@@ -322,6 +502,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "GU & Uniqlo Ueno",
             query: "GU Uniqlo Ueno Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 4 min จาก Ueno Station",
             tips: [
               "👕 Uniqlo = แบรนด์แฟชั่นญี่ปุ่นพื้นฐาน GU = สายแฟชั่นราคาถูกกว่า",
               "💰 ราคา GU ถูกกว่า Uniqlo 30-50% คุณภาพดีเหมือนกัน",
@@ -334,12 +516,31 @@ const freeTimeData: AreaGroup[] = [
         ],
       },
       {
+        category: "รองเท้ากีฬา/ตลาด",
+        icon: "👟",
+        locations: [
+          {
+            name: "ตลาด Ameyoko",
+            query: "Ameyoko Ueno Tokyo",
+            walkingTime: "🚶 1 min จาก Ueno Station",
+            closingTime: "20:00",
+            tips: [
+              "👟 ย่านช้อปปิ้งละลายทรัพย์ที่มีร้านสนีกเกอร์มากมาย (เช่น ABC Mart)",
+              "🍵 เดินซื้อขนมญี่ปุ่น, ชาเขียว, เครื่องสำอางราคาถูก และผลไม้เสียบไม้",
+              "🍢 มีร้านอาหารสตรีทฟู้ดและร้านกินดื่มตอนกลางคืนคึกคัก",
+            ]
+          }
+        ]
+      },
+      {
         category: "100 เยน/ดองกี้",
         icon: "🏪",
         locations: [
           {
             name: "Don Quijote Ueno (ดองกี้)",
             query: "Don Quijote Ueno Tokyo",
+            closingTime: "24:00",
+            walkingTime: "🚶 2 min จาก Ueno Station",
             tips: [
               "🏪 ร้านดองกี้สาขา Ueno ใหญ่ เปิดดึก มีของเยอะมาก",
               "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
@@ -351,6 +552,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Can Do Ueno",
             query: "Can Do Ueno Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 3 min จาก Ueno Station",
             tips: [
               "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
               "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
@@ -362,6 +565,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Daiso Ueno",
             query: "Daiso Ueno Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 3 min จาก Ueno Station",
             tips: [
               "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
               "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
@@ -385,6 +590,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "@cosme TOKYO (Ginza)",
             query: "@cosme TOKYO Ginza",
+            closingTime: "21:00",
+            walkingTime: "🚶 2 min จาก Ginza Station",
             tips: [
               "💄 สาขา Ginza ใหญ่สุดในโตเกียว มีทุกแบรนด์ญี่ปุ่น",
               "🌟 มี Shiseido, SUQQU, Addiction, RMK, Clé de Peau Beauté, CPB",
@@ -397,6 +604,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Ainz & Tulpe Ginza",
             query: "Ainz Tulpe Ginza Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 3 min จาก Ginza Station",
             tips: [
               "💄 ร้านเครื่องสำอางและยายักษ์ใหญ่ใน Ginza",
               "🌟 มี Shiseido, Decorté, Kanebo, SK-II, Hada Labo, Biore",
@@ -409,6 +618,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Matsumoto Kiyoshi Ginza",
             query: "Matsumoto Kiyoshi Ginza Tokyo",
+            closingTime: "22:00",
+            walkingTime: "🚶 2 min จาก Ginza Station",
             tips: [
               "💊 ร้านขายยายอดนิยมมีสาขาเยอะสุดในญี่ปุ่น",
               "💄 มีเครื่องสำอาง, สกินแคร์, กันแดด ราคาถูก",
@@ -426,6 +637,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Euro Sport Tokyo Ginza",
             query: "Euro Sport Tokyo Ginza",
+            walkingTime: "🚶 3 min จาก Ginza Station",
+            closingTime: "20:00",
             tips: [
               "👟 ร้านรองเท้ากีฬาและแบรนด์เนม มีทั้ง Nike, Adidas, New Balance, Asics",
               "🎌 มีรุ่น Exclusive เฉพาะญี่ปุ่นหรือเอเชีย มักหมดเร็วที่อื่น",
@@ -444,6 +657,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Itoya Ginza",
             query: "Itoya Ginza Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 1 min จาก Ginza Station",
             tips: [
               "✏️ ร้านเครื่องเขียน 12 ชั้น ใหญ่สุดในญี่ปุ่น!",
               "🎨 มีปากกา, สมุด, สี, อุปกรณ์ศิลปะ, DIY Craft",
@@ -455,12 +670,60 @@ const freeTimeData: AreaGroup[] = [
         ],
       },
       {
+        category: "แฟชั่น",
+        icon: "👕",
+        locations: [
+          {
+            name: "Uniqlo Ginza Flagship Store",
+            query: "Uniqlo Ginza Tokyo",
+            walkingTime: "🚶 4 min จาก Ginza Station",
+            closingTime: "21:00",
+            tips: [
+              "👕 ร้านยูนิโคล่ Flagship หรูหราและยิ่งใหญ่มาก สูงถึง 12 ชั้น!",
+              "🎌 มีคอลเลกชันกราฟิก (UT) แบบพิเศษๆ ลายจัดเต็มที่หาซื้อที่อื่นไม่ได้",
+              "📸 จุดถ่ายรูปลำโพงรูปปั้นและ Display แก้วสวยงามอลังการ",
+            ]
+          },
+          {
+            name: "GU Ginza (Marronnier Gate)",
+            query: "GU Ginza Tokyo",
+            walkingTime: "🚶 4 min จาก Ginza Station",
+            closingTime: "21:00",
+            tips: [
+              "👕 ร้าน GU สาขาใหญ่ย่านกินซ่า จัดสไตล์แฟชั่นแบบผู้ใหญ่ชิคๆ",
+              "🌟 มีสินค้าพิเศษ สินค้า Collection ใหม่มาลงที่นี่เยอะ",
+              "💸 ถึงอยู่ย่านหรูแต่ราคาน่ารักเหมือนเดิม ช้อปปิ้งต่อจาก Uniqlo ได้เลย",
+              "⏰ เปิด 11:00-21:00",
+            ]
+          }
+        ]
+      },
+      {
+        category: "โมเดล/ของเล่น",
+        icon: "🧸",
+        locations: [
+          {
+            name: "Hakuhinkan Toy Park",
+            query: "Hakuhinkan Toy Park Ginza Tokyo",
+            walkingTime: "🚶 5 min จาก Ginza Station",
+            closingTime: "20:00",
+            tips: [
+              "🧸 ตึกรวมของเล่น 4 ชั้น มีทั้งของสะสม โมเดล รถราง Tamiya",
+              "🏎️ มีรางรถแข่ง Slot Car ให้บริการดวลความเร็วกันได้ที่ชั้นบน",
+              "🧸 เหมาะสำหรับเดินดูเพลินๆ และสายของสะสมเด็กโต",
+            ]
+          }
+        ]
+      },
+      {
         category: "100 เยน/ดองกี้",
         icon: "🏪",
         locations: [
           {
             name: "Don Quijote Ginza (ดองกี้)",
             query: "Don Quijote Ginza Tokyo",
+            closingTime: "24:00",
+            walkingTime: "🚶 2 min จาก Ginza Station",
             tips: [
               "🏪 ร้านดองกี้สาขา Ginza ใหญ่ เปิดดึก มีของเยอะมาก",
               "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
@@ -472,6 +735,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Can Do Ginza",
             query: "Can Do Ginza Tokyo",
+            closingTime: "21:00",
+            walkingTime: "🚶 3 min จาก Ginza Station",
             tips: [
               "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
               "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
@@ -483,6 +748,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Daiso Ginza",
             query: "Daiso Ginza Tokyo",
+            walkingTime: "🚶 4 min จาก Ginza Station",
+            closingTime: "21:00",
             tips: [
               "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
               "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
@@ -506,6 +773,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Radio Kaikan",
             query: "Radio Kaikan Akihabara Tokyo",
+            walkingTime: "🚶 1 min จาก Akihabara Station",
+            closingTime: "20:00",
             tips: [
               "🏢 ตึก 10 ชั้น รวมร้าน Hobby, Figure, Card Game, Doujinshi, Anime Goods",
               "🎴 แต่ละชั้นแยกประเภท - Figure, Card Game, Model Kit, CD/DVD",
@@ -518,6 +787,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Lashinbang Akihabara",
             query: "Lashinbang Akihabara Tokyo",
+            walkingTime: "🚶 5 min จาก Akihabara Station",
+            closingTime: "21:00",
             tips: [
               "🎭 ร้านขายของมือสองสาย Anime/Doujin โดยเฉพาะ มีสินค้า Exclusive เยอะ",
               "📚 มีทั้ง Manga, Doujinshi, Figure, CD, DVD, Game, Goods",
@@ -530,6 +801,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Mandarake Complex",
             query: "Mandarake Complex Akihabara Tokyo",
+            walkingTime: "🚶 4 min จาก Akihabara Station",
+            closingTime: "20:00",
             tips: [
               "🏢 ตึก 8 ชั้น ของมือสอง OTAKU ดังกึ่งดัง! มีทุกอย่าง",
               "📚 Manga, Doujinshi, Figure, Anime Cel, Poster, Goods, Retro Game",
@@ -542,6 +815,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Kotobukiya Akihabara",
             query: "Kotobukiya Akihabara Tokyo",
+            walkingTime: "🚶 3 min จาก Akihabara Station",
+            closingTime: "21:00",
             tips: [
               "🎨 ร้าน Figure และ Model Kit ยักษ์ใหญ่ แบรนด์ Kotobukiya",
               "🚗 มี Tamiya, Bandai, Gunpla, Frame Arms, Maison de Plastic",
@@ -549,6 +824,26 @@ const freeTimeData: AreaGroup[] = [
               "🎌 มี Exclusive Figure และ Limited Edition เฉพาะร้าน",
               "💳 รับบัตรเครดิต มี Tax Free",
               "⏰ เปิด 11:00-21:00",
+            ],
+          },
+          {
+            name: "AmiAmi Akihabara",
+            query: "AmiAmi Akihabara Tokyo",
+            walkingTime: "🚶 2 min จาก Akihabara Station",
+            closingTime: "21:00",
+            tips: [
+              "🎨 ร้านฟิกเกอร์ทั้งของใหม่และมือสองที่โด่งดังมาก มี 2 สาขาใกล้ๆ กัน",
+              "💰 ราคาดีและมีการตีเกรดสภาพของชัดเจน เชื่อถือได้",
+            ],
+          },
+          {
+            name: "Akihabara Gachapon Kaikan",
+            query: "Akihabara Gachapon Kaikan Tokyo",
+            walkingTime: "🚶 5 min จาก Akihabara Station",
+            closingTime: "20:00",
+            tips: [
+              "🎰 สวรรค์ของนักสุ่ม มีตู้กาชาปองให้หมุนเป็นร้อยๆ ตู้ อัปเดตของใหม่ตลอด",
+              "🪙 มีเครื่องแลกเหรียญให้บริการครบครัน",
             ],
           },
         ],
@@ -560,6 +855,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Yodobashi Camera Akiba (ชั้นของเล่น)",
             query: "Yodobashi Camera Akiba Tokyo",
+            walkingTime: "🚶 1 min จาก Akihabara Station",
+            closingTime: "22:00",
             tips: [
               "📷 ตึกใหญ่ 8 ชั้น มีทุกอย่าง - กล้อง, เครื่องใช้ไฟฟ้า, นาฬิกา, ของเล่น",
               "🎮 ชั้นของเล่นมี Gunpla, Figure, Model Kit, Tamiya, Bandai",
@@ -577,6 +874,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "RECOfan Akihabara",
             query: "RECOfan Akihabara Tokyo",
+            walkingTime: "🚶 5 min จาก Akihabara Station",
+            closingTime: "21:00",
             tips: [
               "🎮 ร้านเกมมือสองชื่อดัง มีเกม PS, Nintendo, Sega, PC เก่าและใหม่",
               "💰 เกมมือสองราคา ¥1,000-4,000 เกมใหม่ ¥5,000-8,000",
@@ -584,6 +883,17 @@ const freeTimeData: AreaGroup[] = [
               "🔍 ตรวจสอบแผ่นเกมและคู่มือครบก่อนซื้อ บางร้านมีเฉพาะแผ่น",
               "📦 บางเกมมีเฉพาะภาษาญี่ปุ่น เช็คก่อนว่าเล่นภาษาอังกฤษได้ไหม",
               "⏰ เปิด 11:00-21:00",
+            ],
+          },
+          {
+            name: "Super Potato Akihabara",
+            query: "Super Potato Akihabara Tokyo",
+            walkingTime: "🚶 4 min จาก Akihabara Station",
+            closingTime: "20:00",
+            tips: [
+              "🕹️ ร้านเกม Retro ระดับตำนาน บรรยากาศเหมือนหลุดไปยุค 90s",
+              "🎮 มีทั้งเครื่องตลับ, Famicom, Gameboy และของสะสมสุดแรร์",
+              "🕹️ ชั้นบนสุดมีตู้เกม Arcade คลาสสิกให้นั่งเล่นพร้อมซื้อขนมย้อนยุค",
             ],
           },
         ],
@@ -595,6 +905,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Disk Union Akihabara",
             query: "Disk Union Akihabara Tokyo",
+            walkingTime: "🚶 2 min จาก Akihabara Station",
+            closingTime: "21:00",
             tips: [
               "💿 สาขา Akihabara มี Anime Song, Vocaloid, Game Music, J-Pop เยอะสุด",
               "🎵 มี CD Anime Song, Idol, Voice Actor, Vocaloid, Touhou Project",
@@ -612,6 +924,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Don Quijote Akihabara (ดองกี้)",
             query: "Don Quijote Akihabara Tokyo",
+            walkingTime: "🚶 4 min จาก Akihabara Station",
+            closingTime: "24:00",
             tips: [
               "🏪 ร้านดองกี้สาขา Akihabara ใหญ่ เปิดดึก มีของเยอะมาก",
               "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
@@ -623,6 +937,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Can Do Akihabara",
             query: "Can Do Akihabara Tokyo",
+            walkingTime: "🚶 3 min จาก Akihabara Station",
+            closingTime: "21:00",
             tips: [
               "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
               "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
@@ -634,6 +950,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Daiso Akihabara",
             query: "Daiso Akihabara Tokyo",
+            walkingTime: "🚶 3 min จาก Akihabara Station",
+            closingTime: "21:00",
             tips: [
               "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
               "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
@@ -657,6 +975,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Animate Ikebukuro",
             query: "Animate Ikebukuro Tokyo",
+            walkingTime: "🚶 5 min จาก Ikebukuro Station",
+            closingTime: "21:00",
             tips: [
               "🏢 Animate Flagship Store ใหญ่สุดในญี่ปุ่น 8 ชั้น!",
               "📚 แต่ละชั้นแยกตามประเภท: Manga, Anime, Goods, CD/DVD, Doujinshi",
@@ -669,6 +989,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Surugaya Ikebukuro",
             query: "Surugaya Ikebukuro Tokyo",
+            walkingTime: "🚶 5 min จาก Ikebukuro Station",
+            closingTime: "20:00",
             tips: [
               "🎌 ร้านขายของมือสองสาย Anime/Doujin/Idol มีสินค้าหายากเยอะ",
               "📦 มีทั้ง Figure, CD, DVD, Manga, Goods, Poster, Clear File",
@@ -682,6 +1004,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Otome Road (少女ロード)",
             query: "Otome Road Ikebukuro Tokyo",
+            walkingTime: "🚶 8 min จาก Ikebukuro Station",
+            closingTime: "20:00",
             tips: [
               "🌸 ถนนสาย OTAKU หญิง มีร้าน Animate, K-Books, Mandarake สาขาหญิง",
               "📚 มี Doujinshi, BL, Joseimuke Manga, Otome Game เยอะสุดในโตเกียว",
@@ -693,12 +1017,35 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Sekiendo Ikebukuro",
             query: "Sekiendo Ikebukuro Tokyo",
+            walkingTime: "🚶 1 min จาก Ikebukuro Station",
+            closingTime: "22:00",
             tips: [
               "📚 ร้านหนังสือใหญ่ใน Ikebukuro มี Manga, Novel, Artbook",
               "🎨 มี Artbook อนิเมะ, Manga Guide, How-to-Draw เยอะ",
               "💰 หนังสือใหม่ราคามาตรฐาน หนังสือเก่า ¥300-800",
               "📸 มีมังงะ Limited Edition และ Box Set เฉพาะร้าน",
               "⏰ เปิด 10:00-22:00",
+            ],
+          },
+          {
+            name: "Sunshine City",
+            query: "Sunshine City Ikebukuro Tokyo",
+            walkingTime: "🚶 10 min จาก Ikebukuro Station",
+            closingTime: "20:00",
+            tips: [
+              "🏬 ห้างสรรพสินค้าครบวงจรที่เป็นแหล่งแฮงเอาต์ของสายอนิเมะ",
+              "⚡ มี Pokémon Center Mega Tokyo แหล่งช้อปของโปเกมอนที่ใหญ่มากๆ",
+              "🏴‍☠️ มีร้าน One Piece Mugiwara Store และ Gashapon Department Store (มีตู้กว่า 3,000 ตู้)",
+            ],
+          },
+          {
+            name: "K-BOOKS Ikebukuro",
+            query: "K-BOOKS Ikebukuro Tokyo",
+            walkingTime: "🚶 5 min จาก Ikebukuro Station",
+            closingTime: "20:00",
+            tips: [
+              "📚 ร้านมือสองเฉพาะทาง มีการแบ่งสาขาตามหมวดหมู่ไว้ใกล้ๆ กันในโซน Otome Road",
+              "🎭 มีตั้งแต่อนิเมะ, เกม, K-pop, นักพากย์ ไปจนถึงสายวงไอดอล 2.5D",
             ],
           },
         ],
@@ -710,6 +1057,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Ainz & Tulpe Ikebukuro",
             query: "Ainz Tulpe Ikebukuro Tokyo",
+            walkingTime: "🚶 3 min จาก Ikebukuro Station",
+            closingTime: "21:00",
             tips: [
               "💄 ร้านเครื่องสำอางและยาขนาดใหญ่ มีแบรนด์ญี่ปุ่นครบ",
               "🌟 มี Shiseido, Decorté, Kanebo, SK-II, Hada Labo, Biore, Senka",
@@ -722,6 +1071,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Tobu Department Store (ชั้นเครื่องสำอาง)",
             query: "Tobu Department Store Ikebukuro",
+            walkingTime: "🚶 1 min จาก Ikebukuro Station",
+            closingTime: "21:00",
             tips: [
               "🏬 ห้างสรรพสินค้าใหญ่ติดสถานี Ikebukuro",
               "💄 ชั้นเครื่องสำอางมี Shiseido, Kanebo, Decorté, SUQQU, CPB",
@@ -739,6 +1090,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Don Quijote Ikebukuro (ดองกี้)",
             query: "Don Quijote Ikebukuro Tokyo",
+            walkingTime: "🚶 1 min จาก Ikebukuro Station",
+            closingTime: "24:00",
             tips: [
               "🏪 ร้านดองกี้สาขา Ikebukuro ใหญ่ เปิดดึก มีของเยอะมาก",
               "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
@@ -750,6 +1103,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Can Do Ikebukuro",
             query: "Can Do Ikebukuro Tokyo",
+            walkingTime: "🚶 3 min จาก Ikebukuro Station",
+            closingTime: "21:00",
             tips: [
               "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
               "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
@@ -761,6 +1116,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "Daiso Ikebukuro",
             query: "Daiso Ikebukuro Tokyo",
+            walkingTime: "🚶 3 min จาก Ikebukuro Station",
+            closingTime: "21:00",
             tips: [
               "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
               "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
