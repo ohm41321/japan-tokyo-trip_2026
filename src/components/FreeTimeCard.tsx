@@ -24,6 +24,31 @@ interface CategoryGroup {
 
 const freeTimeData: AreaGroup[] = [
   {
+    area: "Shibuya",
+    emoji: "☕",
+    categories: [
+      {
+        category: "คาเฟ่",
+        icon: "☕",
+        locations: [
+          {
+            name: "HUMAN MADE Cafe by Blue Bottle Coffee",
+            query: "HUMAN MADE Cafe Blue Bottle Coffee Shibuya Tokyo",
+            tips: [
+              "☕ คาเฟ่ Collaboration ระหว่าง HUMAN MADE x Blue Bottle Coffee",
+              "🎨 ดีไซน์สไตล์ HUMAN MADE น่ารัก มี Logo Heart และ Duck",
+              "💰 กาแฟราคา ¥500-700 เค้ก ¥600-800",
+              "📸 ถ่ายรูปสวยทุกมุม มีแก้วและ Merchandise เฉพาะคาเฟ่",
+              "⏰ เปิด 08:00-19:00 (อาจปิดเร็วหรือหยุดบางวัน)",
+              "⚠️ คิวยาวมากช่วง 10:00-14:00 แนะนำไปเช้าหรือเย็น",
+              "🛍️ มี Merchandise HUMAN MADE จำหน่าย Limited Edition ซื้อเร็วหมดเร็ว",
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
     area: "Shinjuku",
     emoji: "🗼",
     categories: [
