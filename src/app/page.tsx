@@ -19,6 +19,7 @@ import SOSButton from '@/components/SOSButton';
 import TabContent from '@/components/TabContent';
 import QuickActionsBar from '@/components/QuickActionsBar';
 import FeatureUpdateModal from '@/components/FeatureUpdateModal';
+import FreeTimeCard from '@/components/FreeTimeCard';
 import { itineraryData } from '@/data/itinerary';
 
 // Trip start date: April 16, 2026
@@ -54,6 +55,10 @@ export default function Home() {
             {itineraryData.map((day, dayIndex) => (
               <DayCard key={day.day} {...day} dayIndex={dayIndex} isToday={dayIndex === todayIndex} />
             ))}
+          </div>
+          {/* Free Time Card */}
+          <div className="mt-6 sm:mt-8">
+            <FreeTimeCard />
           </div>
         </TabContent>
 
