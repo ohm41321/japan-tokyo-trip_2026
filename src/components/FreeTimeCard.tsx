@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useChecklist } from "@/hooks/useChecklist";
+import { useState, useMemo, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface FreeTimeLocation {
   name: string;
   query: string;
   tips: string[];
+  walkingTime?: string; // e.g., "🚶 2 min from Ueno Station"
+  closingTime?: string; // e.g., "20:00"
 }
 
 interface AreaGroup {
@@ -22,6 +23,37 @@ interface CategoryGroup {
   locations: FreeTimeLocation[];
 }
 
+// All unique categories for filter tabs (using normalized names)
+const allCategories = [
+  { category: "ทั้งหมด", icon: "🏪", normalized: "ทั้งหมด" },
+  { category: "คาเฟ่", icon: "☕", normalized: "คาเฟ่" },
+  { category: "อนิเมะ/โอตาคุ", icon: "🎌", normalized: "อนิเมะ/โอตาคุ" },
+  { category: "โมเดล/Tamiya", icon: "🚗", normalized: "โมเดล/Tamiya" },
+  { category: "แผ่นเสียง/CD", icon: "💿", normalized: "แผ่นเสียง/CD" },
+  { category: "เกมมือสอง", icon: "🎮", normalized: "เกมมือสอง" },
+  { category: "เครื่องสำอาง", icon: "💄", normalized: "เครื่องสำอาง" },
+  { category: "รองเท้ากีฬา", icon: "👟", normalized: "รองเท้ากีฬา" },
+  { category: "เครื่องเขียน", icon: "✏️", normalized: "เครื่องเขียน" },
+  { category: "แฟชั่น", icon: "👕", normalized: "แฟชั่น" },
+  { category: "100 เยน", icon: "🏪", normalized: "100 เยน" },
+];
+
+// Deduplicate and normalize category names
+const normalizeCategory = (cat: string): string => {
+  if (cat.includes("อนิเมะ") || cat.includes("โอตาคุ")) return "อนิเมะ/โอตาคุ";
+  if (cat.includes("โมเดล") || cat.includes("Tamiya") || cat.includes("กันพลา")) return "โมเดล/Tamiya";
+  if (cat.includes("ของเล่น") || cat.includes("Tamiya")) return "โมเดล/Tamiya";
+  if (cat.includes("แผ่นเสียง") || cat.includes("CD")) return "แผ่นเสียง/CD";
+  if (cat.includes("เกม") || cat.includes("Retro")) return "เกมมือสอง";
+  if (cat.includes("เครื่องสำอาง") || cat.includes("ยา")) return "เครื่องสำอาง";
+  if (cat.includes("รองเท้า")) return "รองเท้ากีฬา";
+  if (cat.includes("เครื่องเขียน") || cat.includes("ศิลปะ")) return "เครื่องเขียน";
+  if (cat.includes("แฟชั่น")) return "แฟชั่น";
+  if (cat.includes("100 เยน") || cat.includes("ดองกี้")) return "100 เยน";
+  if (cat.includes("คาเฟ่")) return "คาเฟ่";
+  return cat;
+};
+
 const freeTimeData: AreaGroup[] = [
   {
     area: "Shibuya",
@@ -34,6 +66,8 @@ const freeTimeData: AreaGroup[] = [
           {
             name: "HUMAN MADE Cafe by Blue Bottle Coffee",
             query: "HUMAN MADE Cafe Blue Bottle Coffee Shibuya Tokyo",
+            walkingTime: "🚶 5 min จาก Shibuya Station",
+            closingTime: "19:00",
             tips: [
               "☕ คาเฟ่ Collaboration ระหว่าง HUMAN MADE x Blue Bottle Coffee",
               "🎨 ดีไซน์สไตล์ HUMAN MADE น่ารัก มี Logo Heart และ Duck",
@@ -42,6 +76,54 @@ const freeTimeData: AreaGroup[] = [
               "⏰ เปิด 08:00-19:00 (อาจปิดเร็วหรือหยุดบางวัน)",
               "⚠️ คิวยาวมากช่วง 10:00-14:00 แนะนำไปเช้าหรือเย็น",
               "🛍️ มี Merchandise HUMAN MADE จำหน่าย Limited Edition ซื้อเร็วหมดเร็ว",
+            ],
+          },
+        ],
+      },
+      {
+        category: "100 เยน/ดองกี้",
+        icon: "🏪",
+        locations: [
+          {
+            name: "Don Quijote Shibuya (ดองกี้)",
+            query: "Don Quijote Shibuya Tokyo",
+            walkingTime: "🚶 3 min จาก Shibuya Station",
+            closingTime: "24:00",
+            tips: [
+              "🏪 ร้านดองกี้สาขา Shibuya ใหญ่ มีของเยอะมาก เปิดถึงเที่ยงคืน",
+              "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
+              "🎁 ซื้อขนม ของฝาก เครื่องสำอาง ยา ของใช้ ครบในที่เดียว",
+              "💳 ใช้ Passport ทำ Tax Free ได้เลย สำหรับนักท่องเที่ยว",
+              "⏰ เปิด 10:00-24:00 (บางสาขา 24 ชม.)",
+              "📸 มุมถ่ายรูปกับป้ายดองกี้ใหญ่หน้าร้าน",
+              "⚠️ ของเยอะมาก เดินง่ายแต่เสียเวลา ตั้งเป้าไว้ก่อนไป",
+            ],
+          },
+          {
+            name: "Can Do Shibuya",
+            query: "Can Do Shibuya Tokyo",
+            walkingTime: "🚶 4 min จาก Shibuya Station",
+            closingTime: "21:00",
+            tips: [
+              "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น ไม่ใช่ของจีนราคาถูก",
+              "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
+              "🎁 มี Gift Set สวย เหมาะซื้อเป็นของฝาก",
+              "💰 ทุกอย่าง ¥100 คุณภาพดีกว่า Daiso นิดหน่อย",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+          {
+            name: "Daiso Shibuya",
+            query: "Daiso Shibuya Tokyo",
+            walkingTime: "🚶 3 min จาก Shibuya Station",
+            closingTime: "21:00",
+            tips: [
+              "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
+              "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
+              "💰 ทุกอย่าง ¥100 บางร้านมีสินค้า Premium ¥300-500 ด้วย",
+              "🎁 KitKat รสแปลกๆ, ชาเขียว, ขนมญี่ปุ่น ซื้อเป็นของฝากได้",
+              "⏰ เปิด 10:00-21:00",
+              "📸 มีสินค้า Collaboration กับ Character ดังกึ่งดัง บ่อย",
             ],
           },
         ],
@@ -106,6 +188,46 @@ const freeTimeData: AreaGroup[] = [
               "💳 ใช้บัตรเครดิตต่างประเทศได้ มี Tax Free + Coupon ส่วนเพิ่ม 7-10%",
               "🎁 ซื้อกล้อง/เลนส์ ได้ราคาถูกกว่าไทย 20-30%",
               "⏰ เปิด 10:00-22:00",
+            ],
+          },
+        ],
+      },
+      {
+        category: "100 เยน/ดองกี้",
+        icon: "🏪",
+        locations: [
+          {
+            name: "Don Quijote Shinjuku (ดองกี้)",
+            query: "Don Quijote Shinjuku Tokyo",
+            tips: [
+              "🏪 ร้านดองกี้สาขา Shinjuku ใหญ่ เปิดดึก มีของเยอะมาก",
+              "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
+              "🎁 ซื้อขนม ของฝาก เครื่องสำอาง ยา ของใช้ ครบในที่เดียว",
+              "💳 ใช้ Passport ทำ Tax Free ได้เลย สำหรับนักท่องเที่ยว",
+              "⏰ เปิด 10:00-24:00 (บางสาขา 24 ชม.)",
+            ],
+          },
+          {
+            name: "Can Do Shinjuku",
+            query: "Can Do Shinjuku Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
+              "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
+              "🎁 มี Gift Set สวย เหมาะซื้อเป็นของฝาก",
+              "💰 ทุกอย่าง ¥100 คุณภาพดีกว่า Daiso นิดหน่อย",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+          {
+            name: "Daiso Shinjuku",
+            query: "Daiso Shinjuku Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
+              "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
+              "💰 ทุกอย่าง ¥100 บางร้านมีสินค้า Premium ¥300-500 ด้วย",
+              "🎁 KitKat รสแปลกๆ, ชาเขียว, ขนมญี่ปุ่น ซื้อเป็นของฝากได้",
+              "⏰ เปิด 10:00-21:00",
+              "📸 มีสินค้า Collaboration กับ Character ดังกึ่งดัง บ่อย",
             ],
           },
         ],
@@ -211,6 +333,45 @@ const freeTimeData: AreaGroup[] = [
           },
         ],
       },
+      {
+        category: "100 เยน/ดองกี้",
+        icon: "🏪",
+        locations: [
+          {
+            name: "Don Quijote Ueno (ดองกี้)",
+            query: "Don Quijote Ueno Tokyo",
+            tips: [
+              "🏪 ร้านดองกี้สาขา Ueno ใหญ่ เปิดดึก มีของเยอะมาก",
+              "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
+              "🎁 ซื้อขนม ของฝาก เครื่องสำอาง ยา ของใช้ ครบในที่เดียว",
+              "💳 ใช้ Passport ทำ Tax Free ได้เลย สำหรับนักท่องเที่ยว",
+              "⏰ เปิด 10:00-24:00",
+            ],
+          },
+          {
+            name: "Can Do Ueno",
+            query: "Can Do Ueno Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
+              "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
+              "🎁 มี Gift Set สวย เหมาะซื้อเป็นของฝาก",
+              "💰 ทุกอย่าง ¥100 คุณภาพดีกว่า Daiso นิดหน่อย",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+          {
+            name: "Daiso Ueno",
+            query: "Daiso Ueno Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
+              "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
+              "💰 ทุกอย่าง ¥100 บางร้านมีสินค้า Premium ¥300-500 ด้วย",
+              "🎁 KitKat รสแปลกๆ, ชาเขียว, ขนมญี่ปุ่น ซื้อเป็นของฝากได้",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+        ],
+      },
     ],
   },
   {
@@ -288,6 +449,45 @@ const freeTimeData: AreaGroup[] = [
               "🎨 มีปากกา, สมุด, สี, อุปกรณ์ศิลปะ, DIY Craft",
               "🖌️ มี Pilot, Uni-ball, Pentel, Sailor, Platinum ราคาถูกกว่าไทย",
               "📸 ชั้นบนมี Workshop และ Gallery",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+        ],
+      },
+      {
+        category: "100 เยน/ดองกี้",
+        icon: "🏪",
+        locations: [
+          {
+            name: "Don Quijote Ginza (ดองกี้)",
+            query: "Don Quijote Ginza Tokyo",
+            tips: [
+              "🏪 ร้านดองกี้สาขา Ginza ใหญ่ เปิดดึก มีของเยอะมาก",
+              "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
+              "🎁 ซื้อขนม ของฝาก เครื่องสำอาง ยา ของใช้ ครบในที่เดียว",
+              "💳 ใช้ Passport ทำ Tax Free ได้เลย สำหรับนักท่องเที่ยว",
+              "⏰ เปิด 10:00-24:00",
+            ],
+          },
+          {
+            name: "Can Do Ginza",
+            query: "Can Do Ginza Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
+              "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
+              "🎁 มี Gift Set สวย เหมาะซื้อเป็นของฝาก",
+              "💰 ทุกอย่าง ¥100 คุณภาพดีกว่า Daiso นิดหน่อย",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+          {
+            name: "Daiso Ginza",
+            query: "Daiso Ginza Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
+              "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
+              "💰 ทุกอย่าง ¥100 บางร้านมีสินค้า Premium ¥300-500 ด้วย",
+              "🎁 KitKat รสแปลกๆ, ชาเขียว, ขนมญี่ปุ่น ซื้อเป็นของฝากได้",
               "⏰ เปิด 10:00-21:00",
             ],
           },
@@ -405,6 +605,45 @@ const freeTimeData: AreaGroup[] = [
           },
         ],
       },
+      {
+        category: "100 เยน/ดองกี้",
+        icon: "🏪",
+        locations: [
+          {
+            name: "Don Quijote Akihabara (ดองกี้)",
+            query: "Don Quijote Akihabara Tokyo",
+            tips: [
+              "🏪 ร้านดองกี้สาขา Akihabara ใหญ่ เปิดดึก มีของเยอะมาก",
+              "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
+              "🎁 ซื้อขนม ของฝาก เครื่องสำอาง ยา ของใช้ ครบในที่เดียว",
+              "💳 ใช้ Passport ทำ Tax Free ได้เลย สำหรับนักท่องเที่ยว",
+              "⏰ เปิด 10:00-24:00",
+            ],
+          },
+          {
+            name: "Can Do Akihabara",
+            query: "Can Do Akihabara Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
+              "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
+              "🎁 มี Gift Set สวย เหมาะซื้อเป็นของฝาก",
+              "💰 ทุกอย่าง ¥100 คุณภาพดีกว่า Daiso นิดหน่อย",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+          {
+            name: "Daiso Akihabara",
+            query: "Daiso Akihabara Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
+              "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
+              "💰 ทุกอย่าง ¥100 บางร้านมีสินค้า Premium ¥300-500 ด้วย",
+              "🎁 KitKat รสแปลกๆ, ชาเขียว, ขนมญี่ปุ่น ซื้อเป็นของฝากได้",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+        ],
+      },
     ],
   },
   {
@@ -493,6 +732,45 @@ const freeTimeData: AreaGroup[] = [
           },
         ],
       },
+      {
+        category: "100 เยน/ดองกี้",
+        icon: "🏪",
+        locations: [
+          {
+            name: "Don Quijote Ikebukuro (ดองกี้)",
+            query: "Don Quijote Ikebukuro Tokyo",
+            tips: [
+              "🏪 ร้านดองกี้สาขา Ikebukuro ใหญ่ เปิดดึก มีของเยอะมาก",
+              "💰 ทุกอย่างราคาถูก ตั้งแต่ ¥100+ มีทั้งของใหม่และมือสอง",
+              "🎁 ซื้อขนม ของฝาก เครื่องสำอาง ยา ของใช้ ครบในที่เดียว",
+              "💳 ใช้ Passport ทำ Tax Free ได้เลย สำหรับนักท่องเที่ยว",
+              "⏰ เปิด 10:00-24:00",
+            ],
+          },
+          {
+            name: "Can Do Ikebukuro",
+            query: "Can Do Ikebukuro Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนคุณภาพสูง สินค้าทำในญี่ปุ่น",
+              "🍱 มีทั้งของใช้ในบ้าน, เครื่องครัว, ของเล่น, เครื่องเขียน",
+              "🎁 มี Gift Set สวย เหมาะซื้อเป็นของฝาก",
+              "💰 ทุกอย่าง ¥100 คุณภาพดีกว่า Daiso นิดหน่อย",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+          {
+            name: "Daiso Ikebukuro",
+            query: "Daiso Ikebukuro Tokyo",
+            tips: [
+              "💯 ร้าน 100 เยนใหญ่สุดในญี่ปุ่น มีทุกสาขา",
+              "🏠 มีทุกอย่าง - ของใช้ในบ้าน, เครื่องสำอาง, ของเล่น, เครื่องเขียน, อาหาร",
+              "💰 ทุกอย่าง ¥100 บางร้านมีสินค้า Premium ¥300-500 ด้วย",
+              "🎁 KitKat รสแปลกๆ, ชาเขียว, ขนมญี่ปุ่น ซื้อเป็นของฝากได้",
+              "⏰ เปิด 10:00-21:00",
+            ],
+          },
+        ],
+      },
     ],
   },
 ];
@@ -501,9 +779,48 @@ export default function FreeTimeCard() {
   const { language } = useLanguage();
   const [showMap, setShowMap] = useState<string | null>(null);
   const [collapsedAreas, setCollapsedAreas] = useState<Record<string, boolean>>({});
+  const [collapsedTips, setCollapsedTips] = useState<Record<string, boolean>>({});
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("ทั้งหมด");
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  // Load favorites from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("freetime-favorites");
+    if (saved) {
+      try { setFavorites(JSON.parse(saved)); } catch {}
+    }
+  }, []);
+
+  // Save favorites to localStorage
+  useEffect(() => {
+    localStorage.setItem("freetime-favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
+  const [currentTime, setCurrentTime] = useState<number | null>(null);
+
+  // Update time every minute on client only
+  useEffect(() => {
+    setCurrentTime(Date.now());
+    const interval = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleArea = (area: string) => {
     setCollapsedAreas(prev => ({ ...prev, [area]: !prev[area] }));
+  };
+
+  const toggleTips = (key: string) => {
+    setCollapsedTips(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const toggleFavorite = (name: string) => {
+    setFavorites(prev => 
+      prev.includes(name) ? prev.filter(f => f !== name) : [...prev, name]
+    );
   };
 
   const expandAll = () => {
@@ -514,6 +831,37 @@ export default function FreeTimeCard() {
 
   const collapseAll = () => {
     setCollapsedAreas({});
+  };
+
+  const openInMaps = (query: string) => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    window.open(url, '_blank');
+  };
+
+  // Check if location matches search and category filter
+  const matchesFilter = (location: FreeTimeLocation, category: string) => {
+    const matchesSearch = searchQuery === "" || 
+      location.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      location.tips.some(tip => tip.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    const normalizedCat = normalizeCategory(category);
+    const matchesCategory = activeCategory === "ทั้งหมด" || normalizedCat === activeCategory;
+    
+    const matchesFavorites = !showFavoritesOnly || favorites.includes(location.name);
+    
+    return matchesSearch && matchesCategory && matchesFavorites;
+  };
+
+  // Get current hour to check if shop is open (client-side only)
+  const isShopOpen = (closingTime?: string): boolean | null => {
+    if (!closingTime || currentTime === null) return null;
+    const now = new Date(currentTime);
+    const currentHour = now.getHours();
+    const currentMin = now.getMinutes();
+    const [closeHour, closeMin] = closingTime.split(":").map(Number);
+    const closeTotal = closeHour * 60 + (closeMin || 0);
+    const currentTotal = currentHour * 60 + currentMin;
+    return currentTotal < closeTotal;
   };
 
   return (
@@ -530,21 +878,66 @@ export default function FreeTimeCard() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <svg
-              className="w-5 h-5 sm:w-6 sm:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <button
+              onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+              className={`px-2 py-1 rounded-full text-xs sm:text-sm transition-all ${
+                showFavoritesOnly 
+                  ? "bg-white text-purple-600" 
+                  : "bg-white/20 hover:bg-white/30"
+              }`}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
+              {showFavoritesOnly ? "❤️ " : "🤍 "}{language === 'th' ? 'โปรด' : 'Favs'} ({favorites.length})
+            </button>
           </div>
         </div>
         <p className="text-sm sm:text-base opacity-90 mt-1">
-          {language === 'th' 
-            ? 'สถานที่น่าสนใจสำหรับเวลาว่าง แยกตามย่าน' 
+          {language === 'th'
+            ? 'สถานที่น่าสนใจสำหรับเวลาว่าง แยกตามย่าน'
             : 'Interesting spots for free time, organized by area'}
         </p>
+      </div>
+
+      {/* Search Bar */}
+      <div className="px-4 sm:px-6 pt-4">
+        <div className="relative">
+          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={language === 'th' ? '🔍 ค้นหาร้าน...' : '🔍 Search shops...'}
+            className="w-full pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 border-0 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Category Tabs (Horizontal Scroll) */}
+      <div className="px-4 sm:px-6 pt-3">
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          {allCategories.map((cat) => (
+            <button
+              key={cat.normalized}
+              onClick={() => setActiveCategory(cat.normalized)}
+              className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all ${
+                activeCategory === cat.normalized
+                  ? "bg-purple-600 text-white shadow-md"
+                  : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+              }`}
+            >
+              {cat.icon} {cat.category}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Collapse/Expand Controls */}
@@ -571,14 +964,21 @@ export default function FreeTimeCard() {
           const isCollapsed = !collapsedAreas[areaGroup.area];
           const needsCollapse = freeTimeData.length > 3;
 
+          // Check if any shop in this area matches filter
+          const hasMatchingShop = areaGroup.categories.some(cat =>
+            cat.locations.some(loc => matchesFilter(loc, cat.category))
+          );
+
+          if (!hasMatchingShop) return null;
+
           return (
             <div key={areaIndex} className="mb-6 last:mb-0">
               {/* Area Header */}
               <button
                 onClick={() => needsCollapse && toggleArea(areaGroup.area)}
                 className={`w-full flex items-center justify-between p-3 rounded-lg transition-all mb-3 ${
-                  needsCollapse 
-                    ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50' 
+                  needsCollapse
+                    ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50'
                     : 'cursor-default'
                 }`}
               >
@@ -605,6 +1005,9 @@ export default function FreeTimeCard() {
                 <div className="space-y-3 ml-2 sm:ml-4">
                   {areaGroup.categories.map((category, catIndex) => {
                     const catKey = `${areaKey}-cat-${catIndex}`;
+                    const filteredLocations = category.locations.filter(loc => matchesFilter(loc, category.category));
+
+                    if (filteredLocations.length === 0) return null;
 
                     return (
                       <div key={catIndex} className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-3 sm:p-4">
@@ -615,63 +1018,129 @@ export default function FreeTimeCard() {
                             {category.category}
                           </h4>
                           <span className="text-xs text-gray-500 dark:text-gray-400">
-                            ({category.locations.length} {language === 'th' ? 'ร้าน' : 'shops'})
+                            ({filteredLocations.length} {language === 'th' ? 'ร้าน' : 'shops'})
                           </span>
                         </div>
 
                         {/* Shops in Category */}
                         <ul className="space-y-2">
-                          {category.locations.map((location, locIndex) => {
+                          {filteredLocations.map((location, locIndex) => {
                             const locKey = `${catKey}-loc-${locIndex}`;
+                            const tipsKey = `${locKey}-tips`;
+                            const isTipsCollapsed = collapsedTips[tipsKey];
+                            const isFav = favorites.includes(location.name);
+                            const shopOpen = isShopOpen(location.closingTime);
 
                             return (
                               <li key={locIndex} className="group rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all p-2 sm:p-3">
                                 <div className="flex items-start gap-2 sm:gap-3">
                                   <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2">
+                                    {/* Shop Name + Badges */}
+                                    <div className="flex items-center gap-2 flex-wrap">
                                       <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                         {location.name}
                                       </span>
+                                      {/* Favorite Button */}
+                                      <button
+                                        onClick={() => toggleFavorite(location.name)}
+                                        className="text-sm hover:scale-110 transition-transform"
+                                      >
+                                        {isFav ? "❤️" : "🤍"}
+                                      </button>
+                                      {/* Open/Closed Badge */}
+                                      {shopOpen !== null && (
+                                        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                                          shopOpen 
+                                            ? "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300"
+                                            : "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300"
+                                        }`}>
+                                          {shopOpen ? "🟢 " : "🔴 "}{shopOpen ? (language === 'th' ? 'เปิด' : 'Open') : (language === 'th' ? 'ปิด' : 'Closed')}
+                                        </span>
+                                      )}
+                                      {/* Closing Time Badge */}
+                                      {location.closingTime && (
+                                        <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">
+                                          🕒 {location.closingTime}
+                                        </span>
+                                      )}
                                     </div>
-
-                                    {/* Tips Section */}
-                                    {location.tips && location.tips.length > 0 && (
-                                      <div className="mt-2 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-l-4 border-amber-400 dark:border-amber-600 rounded-r-lg p-3">
-                                        <div className="flex items-start gap-2 mb-2">
-                                          <svg className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                                          </svg>
-                                          <span className="text-xs font-semibold text-amber-900 dark:text-amber-300 uppercase tracking-wide">
-                                            {language === 'th' ? '💡 เคล็ดลับและข้อควรระวัง' : '💡 Tips & Advice'}
-                                          </span>
-                                        </div>
-                                        <ul className="space-y-1.5">
-                                          {location.tips.map((tip, tipIndex) => (
-                                            <li key={tipIndex} className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 leading-relaxed flex items-start gap-2">
-                                              <span className="text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0">•</span>
-                                              <span>{tip}</span>
-                                            </li>
-                                          ))}
-                                        </ul>
+                                    {/* Walking Time Badge */}
+                                    {location.walkingTime && (
+                                      <div className="mt-1">
+                                        <span className="text-xs text-gray-600 dark:text-gray-400">
+                                          {location.walkingTime}
+                                        </span>
                                       </div>
                                     )}
 
-                                    {/* Google Maps Button */}
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        setShowMap(showMap === locKey ? null : locKey);
-                                      }}
-                                      className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 inline-flex items-center gap-1 mt-2"
-                                    >
-                                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                                      </svg>
-                                      {showMap === locKey
-                                        ? (language === 'th' ? 'ซ่อนแผนที่' : 'Hide Map')
-                                        : (language === 'th' ? 'ดูบนแผนที่' : 'View on Map')
-                                      }
-                                    </button>
+                                    {/* Tips Section (Collapsible) */}
+                                    {location.tips && location.tips.length > 0 && (
+                                      <div className="mt-2">
+                                        <button
+                                          onClick={() => toggleTips(tipsKey)}
+                                          className="w-full bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border-l-4 border-amber-400 dark:border-amber-600 rounded-r-lg p-3 text-left hover:from-amber-100 hover:to-orange-100 dark:hover:from-amber-900/30 dark:hover:to-orange-900/30 transition-all"
+                                        >
+                                          <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                              <svg className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                              </svg>
+                                              <span className="text-xs font-semibold text-amber-900 dark:text-amber-300 uppercase tracking-wide">
+                                                {language === 'th' ? '💡 เคล็ดลับ' : '💡 Tips'}
+                                              </span>
+                                            </div>
+                                            <svg
+                                              className={`w-4 h-4 text-amber-600 dark:text-amber-400 transition-transform ${isTipsCollapsed ? "" : "rotate-180"}`}
+                                              fill="none"
+                                              stroke="currentColor"
+                                              viewBox="0 0 24 24"
+                                            >
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                          </div>
+                                          {!isTipsCollapsed && (
+                                            <ul className="space-y-1.5 mt-2">
+                                              {location.tips.map((tip, tipIndex) => (
+                                                <li key={tipIndex} className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 leading-relaxed flex items-start gap-2">
+                                                  <span className="text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0">•</span>
+                                                  <span>{tip}</span>
+                                                </li>
+                                              ))}
+                                            </ul>
+                                          )}
+                                        </button>
+                                      </div>
+                                    )}
+
+                                    {/* Action Buttons */}
+                                    <div className="mt-2 flex gap-2 flex-wrap">
+                                      {/* Google Maps Button */}
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setShowMap(showMap === locKey ? null : locKey);
+                                        }}
+                                        className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 inline-flex items-center gap-1"
+                                      >
+                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                                        </svg>
+                                        {showMap === locKey
+                                          ? (language === 'th' ? 'ซ่อนแผนที่' : 'Hide Map')
+                                          : (language === 'th' ? 'ดูบนแผนที่' : 'View on Map')
+                                        }
+                                      </button>
+                                      {/* Open in Maps App */}
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          openInMaps(location.query);
+                                        }}
+                                        className="text-xs text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 inline-flex items-center gap-1"
+                                      >
+                                        📍 {language === 'th' ? 'เปิดใน Maps' : 'Open in Maps'}
+                                      </button>
+                                    </div>
 
                                     {showMap === locKey && (
                                       <div className="mt-2 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600">
