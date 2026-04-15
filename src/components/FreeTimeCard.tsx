@@ -259,6 +259,21 @@ const freeTimeData: AreaGroup[] = [
               "⏰ เปิด 11:00-21:00",
             ],
           },
+          {
+            name: "HMV Record Shop Shinjuku",
+            query: "HMV Record Shop Shinjuku Tokyo",
+            walkingTime: "🚶 2 min จาก Shinjuku Station (East Exit)",
+            closingTime: "21:00",
+            tips: [
+              "💿 ร้านแผ่นเสียงและ CD จากเครือ HMV Japan มีสาขาใหญ่ใน Shinjuku",
+              "🎵 เน้น J-Pop, City Pop, Vinyl ใหม่และมือสอง, Anime Soundtrack",
+              "🌟 มีแผ่น Limited Edition และ Release เฉพาะญี่ปุ่นที่หาไม่ได้ที่อื่น",
+              "💰 Vinyl ใหม่ ¥2,500-4,500 มือสองเริ่มต้น ¥1,000+",
+              "🔍 มีระบบประเมินสภาพแผ่นแบบชัดเจน ซื้อขายแลกเปลี่ยนได้",
+              "⏰ เปิด 11:00-21:00",
+              "💳 รับบัตรเครดิต มี Tax Free สำหรับนักท่องเที่ยว",
+            ],
+          },
         ],
       },
       {
