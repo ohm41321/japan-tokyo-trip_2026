@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Tokyo Trip Planner</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .icon { font-size: 64px; margin-bottom: 20px; }
+    h1 { font-size: 28px; color: #1a202c; margin-bottom: 16px; }
+    p { color: #718096; line-height: 1.6; margin-bottom: 20px; }
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      transition: transform 0.2s;
+    }
+    .btn:hover { transform: scale(1.05); }
+    .info {
+      background: #f7fafc;
+      padding: 16px;
+      border-radius: 12px;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .info h3 { font-size: 16px; color: #2d3748; margin-bottom: 8px; }
+    .info ul { list-style: none; padding: 0; }
+    .info li {
+      color: #4a5568;
+      padding: 6px 0;
+      font-size: 14px;
+    }
+    .info li:before { content: "✓ "; color: #48bb78; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📡</div>
+    <h1>You're Offline</h1>
+    <p>Don't worry! Your trip data is still available.</p>
+    
+    <button class="btn" onclick="window.location.reload()">
+      🔄 Try Again
+    </button>
+
+    <div class="info">
+      <h3>Available Offline:</h3>
+      <ul>
+        <li>Itinerary & Day Plans</li>
+        <li>Free Time Locations</li>
+        <li>Budget Tracker</li>
+        <li>Packing List</li>
+        <li>Transport Guide</li>
+        <li>Emergency Contacts</li>
+        <li>Phrase Book</li>
+      </ul>
+    </div>
+
+    <p style="margin-top: 20px; font-size: 12px; color: #a0aec0;">
+      💡 Tip: Connect to WiFi and reload to sync latest data
+    </p>
+  </div>
+</body>
+</html>

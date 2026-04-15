@@ -1,0 +1,27 @@
+{
+  "name": "Tokyo Trip Planner 2026",
+  "short_name": "Tokyo Trip",
+  "description": "7-day Tokyo trip itinerary with offline support",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "lifestyle"],
+  "lang": "en",
+  "dir": "ltr"
+}

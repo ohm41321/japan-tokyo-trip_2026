@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import DayCard from '@/components/DayCard';
@@ -20,6 +20,8 @@ import TabContent from '@/components/TabContent';
 import QuickActionsBar from '@/components/QuickActionsBar';
 import FeatureUpdateModal from '@/components/FeatureUpdateModal';
 import FreeTimeCard from '@/components/FreeTimeCard';
+import OfflineIndicator from '@/components/OfflineIndicator';
+import { offlineManager } from '@/utils/offlineManager';
 import { itineraryData } from '@/data/itinerary';
 
 // Trip start date: April 16, 2026
@@ -40,6 +42,20 @@ export default function Home() {
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
+
+  // Initialize offline support and auto-save
+  useEffect(() => {
+    // Start auto-save
+    offlineManager.startAutoSave();
+
+    // Cache all data on first load
+    offlineManager.cacheAllData();
+
+    // Cleanup on unmount
+    return () => {
+      offlineManager.stopAutoSave();
+    };
+  }, []);
 
   return (
     <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950 pb-20 lg:pb-8">
@@ -136,6 +152,9 @@ export default function Home() {
 
       {/* Feature Update Modal */}
       <FeatureUpdateModal />
+
+      {/* Offline Indicator & Backup/Restore */}
+      <OfflineIndicator />
     </main>
   );
 }
