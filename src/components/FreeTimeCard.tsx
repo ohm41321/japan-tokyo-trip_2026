@@ -1189,6 +1189,11 @@ export default function FreeTimeCard() {
     setCollapsedTips(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // Helper to check if tips are collapsed (default: collapsed = true)
+  const isTipsCollapsed = (key: string): boolean => {
+    return collapsedTips[key] !== false; // undefined or true = collapsed
+  };
+
   const toggleFavorite = (name: string) => {
     setFavorites(prev => 
       prev.includes(name) ? prev.filter(f => f !== name) : [...prev, name]
@@ -1401,7 +1406,7 @@ export default function FreeTimeCard() {
                           {filteredLocations.map((location, locIndex) => {
                             const locKey = `${catKey}-loc-${locIndex}`;
                             const tipsKey = `${locKey}-tips`;
-                            const isTipsCollapsed = collapsedTips[tipsKey];
+                            const tipsCollapsed = isTipsCollapsed(tipsKey);
                             const isFav = favorites.includes(location.name);
                             const shopOpen = isShopOpen(location.closingTime);
 
@@ -1464,7 +1469,7 @@ export default function FreeTimeCard() {
                                               </span>
                                             </div>
                                             <svg
-                                              className={`w-4 h-4 text-amber-600 dark:text-amber-400 transition-transform ${isTipsCollapsed ? "" : "rotate-180"}`}
+                                              className={`w-4 h-4 text-amber-600 dark:text-amber-400 transition-transform ${tipsCollapsed ? "" : "rotate-180"}`}
                                               fill="none"
                                               stroke="currentColor"
                                               viewBox="0 0 24 24"
@@ -1472,7 +1477,7 @@ export default function FreeTimeCard() {
                                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                             </svg>
                                           </div>
-                                          {!isTipsCollapsed && (
+                                          {!tipsCollapsed && (
                                             <ul className="space-y-1.5 mt-2">
                                               {location.tips.map((tip, tipIndex) => (
                                                 <li key={tipIndex} className="text-xs sm:text-sm text-gray-800 dark:text-gray-200 leading-relaxed flex items-start gap-2">
