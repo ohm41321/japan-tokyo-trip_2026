@@ -1212,9 +1212,11 @@ export default function FreeTimeCard() {
   // Get current hour to check if shop is open (client-side only)
   const isShopOpen = (closingTime?: string): boolean | null => {
     if (!closingTime || currentTime === null) return null;
+    // Convert to Japan time (UTC+9)
     const now = new Date(currentTime);
-    const currentHour = now.getHours();
-    const currentMin = now.getMinutes();
+    const japanTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
+    const currentHour = japanTime.getHours();
+    const currentMin = japanTime.getMinutes();
     const [closeHour, closeMin] = closingTime.split(":").map(Number);
     const closeTotal = closeHour * 60 + (closeMin || 0);
     const currentTotal = currentHour * 60 + currentMin;
